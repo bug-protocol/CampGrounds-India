@@ -1,0 +1,24 @@
+{
+  "name": "campgrounds-india",
+  "version": "1.0.0",
+  "description": "A full-stack campground app inspired by YelpCamp, built with MERN stack and Tailwind CSS. It features user authentication, interactive maps, campground CRUD operations, and real-time reviews. With secure APIs and optimized data handling, it provides a seamless experience for exploring and reviewing campgrounds across India. 🚀",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bug-protocol/CampGrounds-India.git"
+  },
+  "author": "Ashu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bug-protocol/CampGrounds-India/issues"
+  },
+  "homepage": "https://github.com/bug-protocol/CampGrounds-India#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.10.1"
+  }
+}
