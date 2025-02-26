@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const lko = require('./campground_location_lucknow')
 const Campground = require('../model/campground');
 mongoose.connect('mongodb://localhost:27017/Grounds-Database');
 const db = mongoose.connection;
@@ -8,7 +9,16 @@ db.once('open',()=>{
 });
 const seedDB = async()=>{
     await Campground.deleteMany({});
-    const camp = new Campground({title:'My College',price:'100 Rupees', description: 'It is my dorm room, where I live!', location: 'Sector-F, Jankipuram, Lucknow, 226021'});
-    await camp.save();
+    for(let sel of lko){
+        const camp = new Campground({
+            title: `${sel.name}`,
+            price : `${sel.price}`,
+            description : `${sel.description}`,
+            location : `${sel.location}`
+        }); 
+        await camp.save();
+    }
 }
-seedDB(); // This is the seed file for the database
+seedDB().then(()=>{
+    mongoose.connection.close();
+}) // This is the seed file for the database
