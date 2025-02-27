@@ -44,3 +44,9 @@ app.get('/campgrounds',async(req,res)=>{
     const campgrounds = await Campground.find({});
     res.render('campground/camp_index.ejs',{campgrounds});
 })
+
+// We are gonna create a show route which will show the details of the campground
+app.get('/campgrounds/:id',async(req,res)=>{
+    const campground = await Campground.findById(req.params.id);
+    res.render('campground/show.ejs',{campground});
+})
