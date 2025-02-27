@@ -40,3 +40,7 @@ app.get('/makecampground',async(req,res)=>{
     await camp.save();
     res.send(camp);
 })
+app.get('/campgrounds',async(req,res)=>{
+    const campgrounds = await Campground.find({});
+    res.render('campground/camp_index.ejs',{campgrounds});
+})
