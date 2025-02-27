@@ -7,5 +7,10 @@
 </head>
 <body>
     <h2>These are the Prime camping locations in Lucknow</h2>
+    <% for(let eachcamp of campgrounds){ %>
+        <ul>
+            <li><%= eachcamp.title %></li>
+        </ul>
+    <% } %>
 </body>
 </html>
