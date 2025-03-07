@@ -64,3 +64,7 @@ app.get('/campgrounds/:id',async(req,res)=>{
     const campground = await Campground.findById(req.params.id);
     res.render('campground/show.ejs',{campground});
 })
+app.get('/campgrounds/:id/edit',async(req,res)=>{
+    const campground = await Campground.findById(req.params.id);
+    res.render('campground/edit.ejs',{campground});
+})
