@@ -44,7 +44,15 @@ app.get('/campgrounds',async(req,res)=>{
     const campgrounds = await Campground.find({});
     res.render('campground/camp_index.ejs',{campgrounds});
 })
-
+// This will include the post request we're getting from new file
+app.post('/campgrounds',async(req,res)=>{
+    res.send(req.body);
+})
+// This time we'll be creating a form to add a new campground and it should be 
+// post request
+app.get('/campgrounds/new',(req,res)=>{
+    res.render('campground/new.ejs');
+})
 // We are gonna create a show route which will show the details of the campground
 app.get('/campgrounds/:id',async(req,res)=>{
     const campground = await Campground.findById(req.params.id);
