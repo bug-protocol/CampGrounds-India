@@ -53,7 +53,9 @@ app.get('/campgrounds/new',(req,res)=>{
 })
 // This will include the post request we're getting from new file
 app.post('/campgrounds',async(req,res)=>{
-    res.send(req.body);
+    const camp = new Campground(req.body.campground);
+    await camp.save();
+    res.redirect(`/campgrounds/${camp._id}`);
     // It won't parse it inside until we use body-useNewUrlParser
 
 })
