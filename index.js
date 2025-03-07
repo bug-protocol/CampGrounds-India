@@ -21,6 +21,8 @@ const app = express();
 
 app.set('view engine','ejs');
 app.set('views', path.join(__dirname,'views'));
+// Body Parser 
+app.use(express.urlencoded({extended:true}));
 // Constructing the server port
 app.listen('4000',()=>{
     console.log("Starting the Server");
@@ -52,6 +54,8 @@ app.get('/campgrounds/new',(req,res)=>{
 // This will include the post request we're getting from new file
 app.post('/campgrounds',async(req,res)=>{
     res.send(req.body);
+    // It won't parse it inside until we use body-useNewUrlParser
+
 })
 // We are gonna create a show route which will show the details of the campground
 app.get('/campgrounds/:id',async(req,res)=>{
