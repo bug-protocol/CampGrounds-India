@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const Campground = require('./model/campground');
+const methodOverride = require('method-override');
 // Connecting to the database
 mongoose.connect('mongodb://localhost:27017/Grounds-Database');
 
@@ -23,6 +24,8 @@ app.set('view engine','ejs');
 app.set('views', path.join(__dirname,'views'));
 // Body Parser 
 app.use(express.urlencoded({extended:true}));
+//Method Override
+app.use(methodOverride('-method'));
 // Constructing the server port
 app.listen('4000',()=>{
     console.log("Starting the Server");
@@ -67,4 +70,9 @@ app.get('/campgrounds/:id',async(req,res)=>{
 app.get('/campgrounds/:id/edit',async(req,res)=>{
     const campground = await Campground.findById(req.params.id);
     res.render('campground/edit.ejs',{campground});
+})
+app.put('/campgrounds/:id',async(req,res)=>{
+    const {id} = req.params;
+    const campground = await Campground.findByIdAndUpdate(id,{...req.body.campground});
+    res.redirect(`/campgrounds/${campground._id}`);
 })
