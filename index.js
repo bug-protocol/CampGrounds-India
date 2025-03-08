@@ -67,6 +67,7 @@ app.get('/campgrounds/:id',async(req,res)=>{
     const campground = await Campground.findById(req.params.id);
     res.render('campground/show.ejs',{campground});
 })
+// Edit Route
 app.get('/campgrounds/:id/edit',async(req,res)=>{
     const campground = await Campground.findById(req.params.id);
     res.render('campground/edit.ejs',{campground});
@@ -75,4 +76,11 @@ app.put('/campgrounds/:id',async(req,res)=>{
     const {id} = req.params;
     const campground = await Campground.findByIdAndUpdate(id,{...req.body.campground});
     res.redirect(`/campgrounds/${campground._id}`);
+})
+
+// Delete Route
+app.delete('/campgrounds/:id',async(req,res)=>{
+    const {id} = req.params;
+    await Campground.findByIdAndDelete(id);
+    res.redirect('/campgrounds');
 })
