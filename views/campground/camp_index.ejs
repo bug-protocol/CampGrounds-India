@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lucknow Locations</title>
-</head>
+</head> -->
+<%layout('layout/boilerplate.ejs') %>
 <body>
     <h2>These are the Prime camping locations in Lucknow</h2>
     <a href="/campgrounds/new">Add New Camp</a>
@@ -12,6 +13,6 @@
         <ul>
             <li><a href="/campgrounds/<%=eachcamp._id%>"><%= eachcamp.title %></a></li>
         </ul>
-    <% } %>
-</body>
-</html>
+    <%}%>
+<!-- </body>
+</html> -->
