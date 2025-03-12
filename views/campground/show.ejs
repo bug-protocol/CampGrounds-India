@@ -1,12 +1,14 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Show</title>
 </head>
-<body>
+<body> -->
     <!-- <h2>Here we will showcase each city individually.</h2> -->
+    <% layout('layout/boilerplate.ejs') %>
+
      <h2><%= campground.title %></h2>
      <h3><%= campground.location %></h3>
      <div>
@@ -17,5 +19,5 @@
      <a href="/campgrounds/<%=campground._id %>/edit">Edit</a>
      <br>
      <a href="/campgrounds">All Camps</a>
-</body>
-</html>
+<!-- </body>
+</html> -->
