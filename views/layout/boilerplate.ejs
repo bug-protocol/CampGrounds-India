@@ -14,22 +14,20 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1E40AF',
-                        secondary: '#64748B'
+                        primary: '#1E40AF',  /* Blue */
+                    secondary: '#64748B'
                     }
                 }
             }
         };
     </script>
+    <style>
+        body { color: #1E40AF; } /* Forces text to be blue */
+    </style>    
 </head>
-<body class="bg-red-100 text-gray-900">
-    <nav class="bg-primary text-white p-4">
-        <div class="container mx-auto">
-            <h1 class="text-2xl font-bold">CampGrounds-India</h1>
-        </div>
-    </nav>
-
-    <div class="container mx-auto my-8 p-6 bg-white rounded-lg shadow-lg">
+<body>
+    <%-include('../layouts/navbar')%>  
+    <div class="text-center mt-6">
         <%- body %>  <!-- This is where the dynamic content will be injected -->
     </div>
 
