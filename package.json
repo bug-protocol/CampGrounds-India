@@ -17,10 +17,16 @@
   },
   "homepage": "https://github.com/bug-protocol/CampGrounds-India#readme",
   "dependencies": {
+    "@tailwindcss/postcss": "^4.0.14",
     "ejs": "^3.1.10",
     "ejs-mate": "^4.0.0",
     "express": "^4.21.2",
     "method-override": "^3.0.0",
     "mongoose": "^8.10.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.14"
   }
 }
