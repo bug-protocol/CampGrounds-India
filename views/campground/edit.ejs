@@ -1,15 +1,17 @@
     <% layout('layout/boilerplate.ejs') %>
-    <h1>Edit Campground</h1>
+    <h1 class="text-xl font-bold text-gray-800">Edit Campground</h1>
     <form action="/campgrounds/<%=campground._id %>?-method=PUT" method="post">
         <div>
-            <label for="title">Title</label>
-            <input type="text" id="title" name="campground[title]" value="<%=campground.title %>">
+            <label for="title" class="text-lg">Title</label>
+            <input type="text" id="title" name="campground[title]" value="<%=campground.title %>"  class="w-50 ml-8 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
         </div>
-        <div>
-            <label for="location">Location</label>
-            <input type="text" id="location" name="campground[location]" value="<%=campground.location %>">
+        <div class="mt-4">
+            <label for="location" class="text-lg">Location</label>
+            <input type="text" id="location" name="campground[location]" value="<%=campground.location %>"  class="w-50 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
         </div>
-        <button>Update Camp</button>
+        <button class="mt-4 ml-8 py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">Update Camp</button>
         <br>
-        <a href="/campgrounds/<%=campground._id %>">Back to Camp</a>
+        <div class="mt-4">
+            <a href="/campgrounds/<%=campground._id %>" class="ml-8 py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">Back to Camp</a>
+        </div>
     </form>
