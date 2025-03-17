@@ -8,9 +8,29 @@
 <body> -->
     <!-- <h2>Here we will showcase each city individually.</h2> -->
     <% layout('layout/boilerplate.ejs') %>
-
-     <h2 class="text-lg"><%= campground.title %></h2>
-     <h3 class="text-lg"><%= campground.location %></h3>
+    <div class="flex items-center justify-center h-screen bg-gray-100">
+  
+        <!-- Card Container -->
+        <div class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 w-[400px] mt-[-40px] text-center">
+          
+          <!-- Title -->
+          <h2 class="text-2xl font-semibold text-gray-800"><%= campground.title %></h2>
+          
+          <!-- Location -->
+          <h3 class="text-lg text-gray-600 mt-1"><%= campground.location %></h3>
+          
+          <!-- Price -->
+          <h3 class="text-xl font-bold text-green-600 mt-2"><%= campground.price %></h3>
+      
+          <!-- Image -->
+          <div class="w-full h-[300px] mt-4 rounded-lg overflow-hidden">
+            <img src="<%= campground.image %>" class="w-full h-full object-cover">
+          </div>
+      
+        </div>
+      
+      </div>
+      
      <div>
         <form action="/campgrounds/<%=campground._id %>?-method=DELETE" method="post">
             <button class="mt-4 py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">Delete</button>

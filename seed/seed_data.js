@@ -12,6 +12,7 @@ const seedDB = async()=>{
     for(let sel of lko){
         const camp = new Campground({
             title: `${sel.name}`,
+            image: `${sel.image}`,
             price : `${sel.price}`,
             description : `${sel.description}`,
             location : `${sel.location}`

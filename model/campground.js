@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 // Used for creating Schema for campground
 const CampgroundSchema = new Schema ({
     title : String,
+    image : String,
     price : String,
     description : String,
     location : String
