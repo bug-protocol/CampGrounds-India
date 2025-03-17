@@ -8,40 +8,50 @@
 <body> -->
     <!-- <h2>Here we will showcase each city individually.</h2> -->
     <% layout('layout/boilerplate.ejs') %>
-    <div class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
   
         <!-- Card Container -->
-        <div class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 w-[400px] mt-[-40px] text-center">
+        <div class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 w-[400px] text-center mt-[-40px]">
           
-          <!-- Title -->
-          <h2 class="text-2xl font-semibold text-gray-800"><%= campground.title %></h2>
-          
-          <!-- Location -->
-          <h3 class="text-lg text-gray-600 mt-1"><%= campground.location %></h3>
-          
-          <!-- Price -->
-          <h3 class="text-xl font-bold text-green-600 mt-2"><%= campground.price %> per Night</h3>
-      
-          <!-- Image -->
-          <div class="w-full h-[300px] mt-4 rounded-lg overflow-hidden">
-            <img src="<%= campground.image %>" class="w-full h-full object-cover">
-          </div>
-      
+            <!-- Title -->
+            <h2 class="text-2xl font-semibold text-gray-800"><%= campground.title %></h2>
+            
+            <!-- Location -->
+            <h3 class="text-lg text-gray-600 mt-1"><%= campground.location %></h3>
+            
+            <!-- Price -->
+            <h3 class="text-xl font-bold text-green-600 mt-2">₹<%= campground.price %> per Night</h3>
+        
+            <!-- Image -->
+            <div class="w-full h-[300px] mt-4 rounded-lg overflow-hidden">
+                <img src="<%= campground.image %>" class="w-full h-full object-cover">
+            </div>
+        
         </div>
-      
-      </div>
-      
-     <div>
-        <form action="/campgrounds/<%=campground._id %>?-method=DELETE" method="post">
-            <button class="mt-4 py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">Delete</button>
-        </form>
-     </div >
-     <div class="mt-4">
-        <a href="/campgrounds/<%=campground._id %>/edit" class="mt-4 py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">Edit</a>
-     </div>
-     <br>
-     <div>
-        <a href="/campgrounds" class=" px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-60 focus:outline-none focus:ring-2 focus:ring-blue-300">All Camps</a>
-     </div>
+    
+        <!-- Buttons Section -->
+        <div class="flex flex-col items-center gap-4 mt-6">
+            <!-- Edit Button -->
+            <a href="/campgrounds/<%=campground._id %>/edit"
+                class="w-[200px] text-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                Edit Camp
+            </a>
+    
+            <!-- Delete Button -->
+            <form action="/campgrounds/<%=campground._id %>?_method=DELETE" method="post">
+                <button class="w-[200px] py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+                    Delete Camp
+                </button>
+            </form>
+    
+            <!-- Back to All Camps -->
+            <a href="/campgrounds"
+                class="w-[200px] text-center py-2 px-4 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                All Camps
+            </a>
+        </div>
+    
+    </div>
+    
 <!-- </body>
 </html> -->
