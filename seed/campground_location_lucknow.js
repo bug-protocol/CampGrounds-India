@@ -7,7 +7,7 @@ const campingLocations = [
       description: "A peaceful riverside camping spot with beautiful views and bonfire nights.",
       facilities: ["Tents", "Fishing", "Bonfire", "Hiking"],
       image: "https://www.trawell.in/admin/images/upload/006238722Gomti_Riverfront.jpg",
-      price: "₹1500 per night"
+      price: "₹1500"
     },
     {
       name: "Dudhwa Jungle Camp",
@@ -17,7 +17,7 @@ const campingLocations = [
       description: "Experience wildlife camping near Lucknow with jungle safaris and nature trails.",
       facilities: ["Safari Tours", "Bird Watching", "Tents", "Local Cuisine"],
       image: "https://media-cdn.tripadvisor.com/media/photo-s/07/28/60/35/mowgleez-restaurant-and.jpg",
-      price: "₹2500 per night"
+      price: "₹2500"
     },
     {
       name: "Kathauta Lake Camp",
@@ -27,7 +27,7 @@ const campingLocations = [
       description: "Enjoy camping near the lake with kayaking and stargazing activities.",
       facilities: ["Kayaking", "Campfire", "Night Trekking", "Photography"],
       image: "https://i.ytimg.com/vi/9G7L0tfooDk/maxresdefault.jpg",
-      price: "₹1800 per night"
+      price: "₹1800"
     },
     {
       name: "Nawabganj Bird Sanctuary Camp",
@@ -37,7 +37,7 @@ const campingLocations = [
       description: "A serene camping spot for bird lovers, with guided tours and nature walks.",
       facilities: ["Bird Watching", "Guided Walks", "Eco-Tents", "Local Food"],
       image: "https://travelophia.com/wp-content/uploads/2023/06/nawabganj-bird-sanctuary-1-scaled.webp",
-      price: "₹2000 per night"
+      price: "₹2000"
     }
   ];
   

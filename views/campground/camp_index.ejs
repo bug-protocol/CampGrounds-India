@@ -8,6 +8,9 @@
 <%layout('layout/boilerplate.ejs') %>
 <!-- <body> -->
     <h2 class="text-4xl font-bold text-gray-800">These are the Prime camping locations in Lucknow</h2>
+    <div class="mt-7">
+        <a href="/campgrounds/new" class=" py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">Add New Camp</a>
+    </div>
     <% for(let eachcamp of campgrounds){ %>
         <ul class="flex flex-col items-center space-y-6 p-4">
             <li class="flex flex-row bg-white shadow-lg rounded-lg border border-gray-200 w-[600px] p-4">
@@ -32,8 +35,5 @@
           </ul>
           
         <%}%>
-        <div class="mt-4">
-            <a href="/campgrounds/new" class=" py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">Add New Camp</a>
-        </div>
 <!-- </body>
 </html> -->
