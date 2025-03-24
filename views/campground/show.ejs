@@ -9,24 +9,24 @@
     <!-- <h2>Here we will showcase each city individually.</h2> -->
     <% layout('layout/boilerplate.ejs') %>
     <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-  
-        <!-- Card Container -->
-        <div class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 w-[400px] text-center mt-[-40px]">
-          
+    
+        <!-- Campground Card -->
+        <div class=" p-8 rounded-lg shadow-2xl border border-gray-300 w-[400px] text-center">
+    
             <!-- Title -->
             <h2 class="text-2xl font-semibold text-gray-800"><%= campground.title %></h2>
-            
+    
             <!-- Location -->
             <h3 class="text-lg text-gray-600 mt-1"><%= campground.location %></h3>
-            
+    
             <!-- Price -->
             <h3 class="text-xl font-bold text-green-600 mt-2">₹<%= campground.price %> per Night</h3>
-        
+    
             <!-- Image -->
             <div class="w-full h-[300px] mt-4 rounded-lg overflow-hidden">
                 <img src="<%= campground.image %>" class="w-full h-full object-cover">
             </div>
-        
+    
         </div>
     
         <!-- Buttons Section -->
@@ -38,8 +38,9 @@
             </a>
     
             <!-- Delete Button -->
-            <form action="/campgrounds/<%=campground._id %>?-method=DELETE" method="post">
-                <button class="w-[200px] py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
+            <form action="/campgrounds/<%=campground._id %>?_method=DELETE" method="post">
+                <button
+                    class="w-[200px] py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
                     Delete Camp
                 </button>
             </form>
@@ -50,6 +51,39 @@
                 All Camps
             </a>
         </div>
+    
+        <!-- Review Form (Same Background as Card) -->
+        <form action="" class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 w-[400px] mt-8 space-y-6">
+            <h2 class="text-2xl font-semibold text-gray-800">Write a Review</h2>
+    
+            <!-- Rating -->
+            <div class="flex flex-col space-y-2">
+                <label for="rating" class="text-gray-700 font-medium">Rating</label>
+                <select id="rating" name="rating"
+                    class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="">Select Rating</option>
+                    <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+                    <option value="4">⭐⭐⭐⭐ - Good</option>
+                    <option value="3">⭐⭐⭐ - Average</option>
+                    <option value="2">⭐⭐ - Poor</option>
+                    <option value="1">⭐ - Terrible</option>
+                </select>
+            </div>
+    
+            <!-- Review Text -->
+            <div class="flex flex-col space-y-2">
+                <label for="body" class="text-gray-700 font-medium">Review</label>
+                <textarea id="body" name="review[body]" rows="5"
+                    class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Write your review here..."></textarea>
+            </div>
+    
+            <!-- Submit Button -->
+            <div class="text-right">
+                <button type="submit"
+                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Submit</button>
+            </div>
+        </form>
     
     </div>
     
