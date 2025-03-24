@@ -6,7 +6,13 @@ const CampgroundSchema = new Schema ({
     image : String,
     price : String,
     description : String,
-    location : String
+    location : String,
+    review :[
+        {
+            type : Schema.Types.ObjectId,
+            ref : 'Review'
+        }
+    ]
 });
 // This is the data for the map we are going to add for the Campground
 module.exports = mongoose.model('Campground',CampgroundSchema);
