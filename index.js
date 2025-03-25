@@ -67,7 +67,7 @@ app.post('/campgrounds',async(req,res)=>{
 })
 // We are gonna create a show route which will show the details of the campground
 app.get('/campgrounds/:id',async(req,res)=>{
-    const campground = await Campground.findById(req.params.id);
+    const campground = await Campground.findById(req.params.id).populate('review');;
     res.render('campground/show.ejs',{campground});
 })
 // Edit Route

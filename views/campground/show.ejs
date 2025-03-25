@@ -10,83 +10,100 @@
     <% layout('layout/boilerplate.ejs') %>
     <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
     
-        <!-- Campground Card -->
-        <div class=" p-8 rounded-lg shadow-2xl border border-gray-300 w-[400px] text-center">
+        <!-- Two Column Layout -->
+        <div class="flex flex-wrap gap-10">
     
-            <!-- Title -->
-            <h2 class="text-2xl font-semibold text-gray-800"><%= campground.title %></h2>
+            <!-- Campground Card -->
+            <div class="p-8 rounded-lg shadow-2xl border border-gray-300 w-[400px] h-[650px] text-center bg-white overflow-hidden">
+                <h2 class="text-2xl font-semibold text-gray-800"><%= campground.title %></h2>
+                <h3 class="text-lg text-gray-600 mt-1"><%= campground.location %></h3>
+                <h3 class="text-xl font-bold text-green-600 mt-2">₹<%= campground.price %> per Night</h3>
+                <div class="w-full h-[300px] mt-4 rounded-lg overflow-hidden">
+                    <img src="<%= campground.image %>" class="w-full h-full object-cover">
+                </div>
     
-            <!-- Location -->
-            <h3 class="text-lg text-gray-600 mt-1"><%= campground.location %></h3>
+                <!-- Buttons -->
+                <div class="flex flex-col items-center gap-4 mt-6">
+                    <a href="/campgrounds/<%=campground._id %>/edit"
+                        class="w-[200px] text-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600">
+                        Edit Camp
+                    </a>
     
-            <!-- Price -->
-            <h3 class="text-xl font-bold text-green-600 mt-2">₹<%= campground.price %> per Night</h3>
+                    <form action="/campgrounds/<%=campground._id %>?_method=DELETE" method="post">
+                        <button
+                            class="w-[200px] py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600">
+                            Delete Camp
+                        </button>
+                    </form>
     
-            <!-- Image -->
-            <div class="w-full h-[300px] mt-4 rounded-lg overflow-hidden">
-                <img src="<%= campground.image %>" class="w-full h-full object-cover">
+                    <a href="/campgrounds"
+                        class="w-[200px] text-center py-2 px-4 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600">
+                        All Camps
+                    </a>
+                </div>
+            </div>
+    
+            <!-- Review Form + Reviews -->
+            <div class="flex flex-col gap-8">
+    
+                <!-- Review Form -->
+                <form action="/campgrounds/<%=campground._id %>/reviews" method="post"
+                    class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 w-[450px] space-y-6"
+                    novalidate id="reviewForm">
+                    <h2 class="text-2xl font-semibold text-gray-800">Write a Review</h2>
+    
+                    <!-- Rating -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="rating" class="text-gray-700 font-medium">Rating</label>
+                        <select id="rating" name="review[rating]" required
+                            class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select Rating</option>
+                            <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+                            <option value="4">⭐⭐⭐⭐ - Good</option>
+                            <option value="3">⭐⭐⭐ - Average</option>
+                            <option value="2">⭐⭐ - Poor</option>
+                            <option value="1">⭐ - Terrible</option>
+                        </select>
+                    </div>
+    
+                    <!-- Review Text -->
+                    <div class="flex flex-col space-y-2">
+                        <label for="body" class="text-gray-700 font-medium">Review</label>
+                        <textarea id="body" name="review[body]" rows="4" required
+                            class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Write your review here..."></textarea>
+                    </div>
+    
+                    <!-- Submit Button -->
+                    <div class="text-right">
+                        <button type="submit"
+                            class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Submit</button>
+                    </div>
+                </form>
+    
+                <!-- Review Section with Card-Like Reviews -->
+                <div class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 w-[450px] space-y-4">
+                    <h2 class="text-2xl font-semibold text-gray-800">Reviews</h2>
+                    <% if(campground.review.length === 0){ %>
+                        <p class="text-gray-600">No reviews yet. Be the first to write one!</p>
+                    <% } %>
+    
+                    <% for(let each_review of campground.review){ %>
+                        <div class="bg-gray-100 p-4 rounded-lg shadow-md">
+                            <!-- Dynamic Stars -->
+                            <div class="text-yellow-500 text-lg mb-2">
+                                <% for(let i=0; i < each_review.rating; i++){ %> ⭐ <% } %>
+                            </div>
+                            <p class="text-gray-700"><%= each_review.body %></p>
+                        </div>
+                    <% } %>
+                </div>
+    
             </div>
     
         </div>
-    
-        <!-- Buttons Section -->
-        <div class="flex flex-col items-center gap-4 mt-6">
-            <!-- Edit Button -->
-            <a href="/campgrounds/<%=campground._id %>/edit"
-                class="w-[200px] text-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                Edit Camp
-            </a>
-    
-            <!-- Delete Button -->
-            <form action="/campgrounds/<%=campground._id %>?_method=DELETE" method="post">
-                <button
-                    class="w-[200px] py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300">
-                    Delete Camp
-                </button>
-            </form>
-    
-            <!-- Back to All Camps -->
-            <a href="/campgrounds"
-                class="w-[200px] text-center py-2 px-4 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                All Camps
-            </a>
-        </div>
-    
-      <!-- Review Form -->
-<form action="/campgrounds/<%=campground._id %>/reviews" method="post"
-    class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 w-[400px] mt-8 space-y-6" novalidate id="reviewForm">
-    <h2 class="text-2xl font-semibold text-gray-800">Write a Review</h2>
-
-    <!-- Rating -->
-    <div class="flex flex-col space-y-2">
-        <label for="rating" class="text-gray-700 font-medium">Rating</label>
-        <select id="rating" name="review[rating]" required
-            class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="">Select Rating</option>
-            <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
-            <option value="4">⭐⭐⭐⭐ - Good</option>
-            <option value="3">⭐⭐⭐ - Average</option>
-            <option value="2">⭐⭐ - Poor</option>
-            <option value="1">⭐ - Terrible</option>
-        </select>
     </div>
-
-    <!-- Review Text -->
-    <div class="flex flex-col space-y-2">
-        <label for="body" class="text-gray-700 font-medium">Review</label>
-        <textarea id="body" name="review[body]" rows="5" required
-            class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Write your review here..."></textarea>
-    </div>
-
-    <!-- Submit Button -->
-    <div class="text-right">
-        <button type="submit"
-            class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Submit</button>
-    </div>
-</form>
     
-    </div>
     <script>
         const reviewForm = document.getElementById('reviewForm');
         reviewForm.addEventListener('submit', function (e) {
