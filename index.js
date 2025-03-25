@@ -96,3 +96,11 @@ app.delete('/campgrounds/:id',async(req,res)=>{
     await Campground.findByIdAndDelete(id);
     res.redirect('/campgrounds');
 })
+
+// Delete reviews
+app.delete('/campgrounds/:id/reviews/:reviewId',async(req,res)=>{
+    const{id,reviewId} = req.params;
+    await Campground.findByIdAndUpdate(id,{$pull:{review:reviewId}});
+    await Campground.findByIdAndDelete(reviewId);
+    res.redirect(`/campgrounds/${id}`);
+})
