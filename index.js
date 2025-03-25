@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const Campground = require('./model/campground');
+const Review = require('./model/review');
 // Connecting to the database
 mongoose.connect('mongodb://localhost:27017/Grounds-Database');
 
@@ -80,6 +81,15 @@ app.put('/campgrounds/:id',async(req,res)=>{
     res.redirect(`/campgrounds/${campground._id}`);
 })
 
+// Adding a post request for review form
+app.post('/campgrounds/:id/reviews',async(req,res)=>{
+    const campground = await Campground.findById(req.params.id);
+    const review_drop = new Review(req.body.review);
+    campground.review.push(review_drop);
+    await review_drop.save();
+    await campground.save();
+    res.redirect(`/campgrounds/${campground._id}`);
+})
 // Delete Route
 app.delete('/campgrounds/:id',async(req,res)=>{
     const {id} = req.params;
