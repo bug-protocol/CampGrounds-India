@@ -7,7 +7,7 @@ const Campground = require('./model/campground');
 const Review = require('./model/review');
 
 // Fixating routes
-// const campgrounds = require('./routes/campground');
+const campgrounds = require('./routes/campground.js');
 // Connecting to the database
 mongoose.connect('mongodb://localhost:27017/Grounds-Database');
 
@@ -25,7 +25,7 @@ db.once('open',()=>{
 })
 const app = express();
 // Route connections
-// app.use('/campgrounds',campgrounds);
+app.use('/campgrounds',campgrounds);
 // This is the static file connection
 app.engine('ejs',ejsMate);
 app.set('view engine','ejs');
@@ -48,50 +48,7 @@ app.get ('/',(req,res)=>{
 app.get('/home',(req,res)=>{
     res.render('home');
 })
-app.get('/makecampground',async(req,res)=>{
-    const camp = new Campground({title:'My College',price:'100 Rupees', description: 'It is my dorm room, where I live!', location: 'Sector-F, Jankipuram, Lucknow, 226021'});
-    await camp.save();
-    res.send(camp);
-})
-app.get('/campgrounds',async(req,res)=>{
-    const campgrounds = await Campground.find({});
-    res.render('campground/camp_index.ejs',{campgrounds});
-})
-// This time we'll be creating a form to add a new campground and it should be 
-// post request
-app.get('/campgrounds/new',(req,res)=>{
-    res.render('campground/new.ejs');
-})
-// This will include the post request we're getting from new file
-app.post('/campgrounds',async(req,res)=>{
-    console.log(req.body);
-    const camp = new Campground(req.body.campground);
-    await camp.save();
-    res.redirect(`/campgrounds/${camp._id}`);
-    // It won't parse it inside until we use body-useNewUrlParser
 
-})
-// We are gonna create a show route which will show the details of the campground
-app.get('/campgrounds/:id',async(req,res)=>{
-    const campground = await Campground.findById(req.params.id).populate('review');;
-    res.render('campground/show.ejs',{campground});
-})
-// Edit Route
-app.get('/campgrounds/:id/edit',async(req,res)=>{
-    const campground = await Campground.findById(req.params.id);
-    res.render('campground/edit.ejs',{campground});
-})
-app.put('/campgrounds/:id',async(req,res)=>{
-    const {id} = req.params;
-    const campground = await Campground.findByIdAndUpdate(id,{...req.body.campground});
-    res.redirect(`/campgrounds/${campground._id}`);
-})
-// Delete Route
-app.delete('/campgrounds/:id',async(req,res)=>{
-    const {id} = req.params;
-    await Campground.findByIdAndDelete(id);
-    res.redirect('/campgrounds');
-})
 // Adding a post request for review form
 app.post('/campgrounds/:id/reviews',async(req,res)=>{
     const campground = await Campground.findById(req.params.id);
