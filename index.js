@@ -8,6 +8,7 @@ const Review = require('./model/review');
 
 // Fixating routes
 const campgrounds = require('./routes/campground.js');
+const reviews = require('./routes/reviews.js');
 // Connecting to the database
 mongoose.connect('mongodb://localhost:27017/Grounds-Database');
 
@@ -26,6 +27,7 @@ db.once('open',()=>{
 const app = express();
 // Route connections
 app.use('/campgrounds',campgrounds);
+app.use('/campgrounds/:id/reviews',reviews);
 // This is the static file connection
 app.engine('ejs',ejsMate);
 app.set('view engine','ejs');
@@ -47,22 +49,4 @@ app.get ('/',(req,res)=>{
 // This is the home route
 app.get('/home',(req,res)=>{
     res.render('home');
-})
-
-// Adding a post request for review form
-app.post('/campgrounds/:id/reviews',async(req,res)=>{
-    const campground = await Campground.findById(req.params.id);
-    const review_drop = new Review(req.body.review);
-    campground.review.push(review_drop);
-    await review_drop.save();
-    await campground.save();
-    res.redirect(`/campgrounds/${campground._id}`);
-})
-
-// Delete reviews
-app.delete('/campgrounds/:id/reviews/:reviewId',async(req,res)=>{
-    const{id,reviewId} = req.params;
-    await Campground.findByIdAndUpdate(id,{$pull:{review:reviewId}});
-    await Campground.findByIdAndDelete(reviewId);
-    res.redirect(`/campgrounds/${id}`);
 })
