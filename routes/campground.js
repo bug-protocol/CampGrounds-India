@@ -23,6 +23,7 @@ router.post('/',async(req,res)=>{
     console.log(req.body);
     const camp = new Campground(req.body.campground);
     await camp.save();
+    req.flash('success','Successfully made a new campground!');
     res.redirect(`/campgrounds/${camp._id}`);
     // It won't parse it inside until we use body-useNewUrlParser
 

@@ -26,17 +26,6 @@ db.once('open',()=>{
     console.log("Database Connected!!"); // It checks if connection is successful.
 })
 const app = express();
-// Route connections
-app.use('/campgrounds',campgrounds);
-app.use('/campgrounds/:id/reviews',reviews);
-// This is the static file connection
-app.engine('ejs',ejsMate);
-app.set('view engine','ejs');
-app.set('views', path.join(__dirname,'views'));
-// Body Parser 
-app.use(express.urlencoded({extended:true}));
-//Method Override
-app.use(methodOverride('-method'));
 
 // Express Sessions
 const sessionConfig = {
@@ -50,6 +39,27 @@ const sessionConfig = {
     } 
 }
 app.use(session(sessionConfig));
+app.use(flash());
+
+// This is the middleware for flash messages
+app.use((req,res,next)=>{
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+})
+// Route connections
+app.use('/campgrounds',campgrounds);
+app.use('/campgrounds/:id/reviews',reviews);
+// This is the static file connection
+app.engine('ejs',ejsMate);
+app.set('view engine','ejs');
+app.set('views', path.join(__dirname,'views'));
+// Body Parser 
+app.use(express.urlencoded({extended:true}));
+//Method Override
+app.use(methodOverride('-method'));
+
+
 // Constructing the server port
 app.listen('4000',()=>{
     console.log("Starting the Server");
