@@ -47,6 +47,8 @@ router.put('/:id',async(req,res)=>{
 router.delete('/:id',async(req,res)=>{
     const {id} = req.params;
     await Campground.findByIdAndDelete(id);
+    req.flash('success','Successfully deleted campground!');
+    // This will delete the campground and redirect to the campgrounds page
     res.redirect('/campgrounds');
 })
 module.exports = router;

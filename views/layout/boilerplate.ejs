@@ -28,9 +28,12 @@
 <body class="bg-blue-50 min-h-screen p-6">
     <%-include('../partials/navbar')%>  
     <div class="text-center mt-6">
-        <%= success %>
+        <%- include('../partials/flashes') %>
+
         <%- body %>  <!-- This is where the dynamic content will be injected -->
     </div>
     <%-include('../partials/footer') %>
+    <!-- // Flash Fade Script -->
+    <script src="/javascript/flash-fade-script.js"></script>
 </body>
 </html>

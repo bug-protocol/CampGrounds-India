@@ -1,0 +1,17 @@
+<% if (success && success.length > 0) { %>
+    <div class="alert bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 rounded-md flex justify-between items-center">
+        <strong>Success:</strong> <span><%= success %></span>
+        <button onclick="this.parentElement.remove()" class="text-green-700 hover:text-green-900">
+            ✖
+        </button>
+    </div>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+    <div class="alert bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 rounded-md flex justify-between items-center">
+        <strong>Error:</strong> <span><%= error %></span>
+        <button onclick="this.parentElement.remove()" class="text-red-700 hover:text-red-900">
+            ✖
+        </button>
+    </div>
+<% } %>
