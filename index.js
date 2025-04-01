@@ -5,7 +5,8 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const Campground = require('./model/campground');
 const Review = require('./model/review');
-
+const session = require('express-session');
+const flash = require('connect-flash');
 // Fixating routes
 const campgrounds = require('./routes/campground.js');
 const reviews = require('./routes/reviews.js');
@@ -36,6 +37,19 @@ app.set('views', path.join(__dirname,'views'));
 app.use(express.urlencoded({extended:true}));
 //Method Override
 app.use(methodOverride('-method'));
+
+// Express Sessions
+const sessionConfig = {
+    secret:'tryingoutsession',
+    resave:false,
+    saveUninitialized:true,
+    cookie:{
+        httpOnly:true,
+        expires: Date.now() + 1000*60*60*24*7, // 7 days
+        maxAge: 1000*60*60*24*7
+    } 
+}
+app.use(session(sessionConfig));
 // Constructing the server port
 app.listen('4000',()=>{
     console.log("Starting the Server");
