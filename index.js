@@ -7,6 +7,9 @@ const Campground = require('./model/campground');
 const Review = require('./model/review');
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+const localStrategy = require('passport-local'); 
+const User = require('./model/user');
 // Fixating routes
 const campgrounds = require('./routes/campground.js');
 const reviews = require('./routes/reviews.js');
@@ -40,6 +43,13 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig));
 app.use(flash());
+
+//Authentication related
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());   
 app.use(express.static(path.join(__dirname,'public')));
 // This is the middleware for flash messages
 app.use((req,res,next)=>{
