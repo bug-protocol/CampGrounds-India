@@ -11,6 +11,7 @@ const passport = require('passport');
 const localStrategy = require('passport-local'); 
 const User = require('./model/user');
 // Fixating routes
+const userRoutes = require('./routes/user.js');
 const campgrounds = require('./routes/campground.js');
 const reviews = require('./routes/reviews.js');
 // Connecting to the database
@@ -58,6 +59,7 @@ app.use((req,res,next)=>{
     next();
 })
 // Route connections
+app.use('/',userRoutes);
 app.use('/campgrounds',campgrounds);
 app.use('/campgrounds/:id/reviews',reviews);
 // This is the static file connection
