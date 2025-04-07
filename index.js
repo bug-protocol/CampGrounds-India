@@ -58,6 +58,8 @@ app.use((req,res,next)=>{
     res.locals.error = req.flash('error');
     next();
 })
+// Body Parser 
+app.use(express.urlencoded({extended:true}));
 // Route connections
 app.use('/',userRoutes);
 app.use('/campgrounds',campgrounds);
@@ -66,8 +68,6 @@ app.use('/campgrounds/:id/reviews',reviews);
 app.engine('ejs',ejsMate);
 app.set('view engine','ejs');
 app.set('views', path.join(__dirname,'views'));
-// Body Parser 
-app.use(express.urlencoded({extended:true}));
 //Method Override
 app.use(methodOverride('-method'));
 
