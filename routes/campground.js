@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const methodOverride = require('method-override');
 const Campground = require('../model/campground');
+const {isloggedIn} = require('../middleware');
 router.use(express.urlencoded({extended:true}));
 router.use(methodOverride('-method'));
 router.get('/makecampground',async(req,res)=>{
@@ -15,7 +16,7 @@ router.get('/',async(req,res)=>{
 })
 // This time we'll be creating a form to add a new campground and it should be 
 // post request
-router.get('/new',(req,res)=>{
+router.get('/new',isloggedIn,(req,res)=>{
     res.render('campground/new.ejs');
 })
 // This will include the post request we're getting from new file
