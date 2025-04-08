@@ -54,6 +54,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(express.static(path.join(__dirname,'public')));
 // This is the middleware for flash messages
 app.use((req,res,next)=>{
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
