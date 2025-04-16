@@ -31,10 +31,11 @@ router.post('/',async(req,res)=>{
 })
 // We are gonna create a show route which will show the details of the campground
 router.get('/:id',async(req,res)=>{
-    const campground = await Campground.findById(req.params.id).populate('review');;
+    const campground = await Campground.findById(req.params.id).populate('review').populate('user');
+    console.log(campground);
     res.render('campground/show.ejs',{campground});
 })
-// Edit Route
+// Edit Router
 router.get('/:id/edit',async(req,res)=>{
     const campground = await Campground.findById(req.params.id);
     res.render('campground/edit.ejs',{campground});
