@@ -3,6 +3,7 @@ const router = express.Router();
 const methodOverride = require('method-override');
 const Campground = require('../model/campground');
 const {isloggedIn} = require('../middleware');
+const campground = require('../model/campground');
 router.use(express.urlencoded({extended:true}));
 router.use(methodOverride('-method'));
 router.get('/makecampground',async(req,res)=>{
@@ -16,23 +17,26 @@ router.get('/',async(req,res)=>{
 })
 // This time we'll be creating a form to add a new campground and it should be 
 // post request
-router.get('/new',isloggedIn,(req,res)=>{
-    res.render('campground/new.ejs');
-})
 // This will include the post request we're getting from new file
-router.post('/',async(req,res)=>{
+router.post('/',isloggedIn,async(req,res)=>{
     console.log(req.body);
     const camp = new Campground(req.body.campground);
+    console.log(req.user);
+    camp.user = req.user._id;
     await camp.save();
     req.flash('success','Successfully made a new campground!');
     res.redirect(`/campgrounds/${camp._id}`);
     // It won't parse it inside until we use body-useNewUrlParser
 
 })
+router.get('/new',isloggedIn,(req,res)=>{
+    res.render('campground/new.ejs');
+})
 // We are gonna create a show route which will show the details of the campground
-router.get('/:id',async(req,res)=>{
+router.get('/:id',isloggedIn, async(req,res)=>{
     const campground = await Campground.findById(req.params.id).populate('review').populate('user');
     console.log(campground);
+    console.log(campground.user.username);
     res.render('campground/show.ejs',{campground});
 })
 // Edit Router

@@ -4,7 +4,8 @@
 
     <!-- Two Column Layout -->
     <div class="flex flex-wrap gap-10 justify-center">
-
+        <!-- Now for authorization purposes we're writing this logic such that
+        any user who's not authorised shouldn't perform any tasks -->
         <!-- Campground Card -->
         <div class="p-8 rounded-lg shadow-2xl border border-gray-300 w-[500px] h-[650px] text-center bg-white overflow-hidden">
             <h2 class="text-2xl font-semibold text-gray-800"><%= campground.title %></h2>
@@ -14,17 +15,18 @@
             <div class="w-full h-[300px] mt-4 rounded-lg overflow-hidden">
                 <img src="<%= campground.image %>" class="w-full h-full object-cover" alt="Campground Image">
             </div>
-
+            
             <h3 class="text-md text-gray-500 mt-2">Posted by <span class="font-semibold"><%= campground.user.username %></span></h3>
-
+            
             <!-- Action Buttons -->
+            <% if(currentUser && campground.user.equals(currentUser._id)){ %>
             <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-6">
                 <a href="/campgrounds/<%= campground._id %>/edit"
                    class="min-w-[140px] w-full md:w-auto text-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600">
                     Edit Camp
                 </a>
 
-                <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+                <form action="/campgrounds/<%= campground._id %>?-method=DELETE" method="POST">
                     <button type="submit"
                             class="min-w-[140px] w-full md:w-auto py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600">
                         Delete Camp
@@ -36,8 +38,8 @@
                     All Camps
                 </a>
             </div>
+            <%}%>
         </div>
-
         <!-- Review Form and Review Section -->
         <div class="flex flex-col gap-8">
 
@@ -94,7 +96,7 @@
                         </div>
                         <p class="text-gray-700"><%= each_review.body %></p>
 
-                        <form action="/campgrounds/<%= campground._id %>/reviews/<%= each_review._id %>?_method=DELETE" method="POST">
+                        <form action="/campgrounds/<%= campground._id %>/reviews/<%= each_review._id %>?-method=DELETE" method="POST">
                             <button type="submit" class="text-sm text-red-500 hover:underline mt-2">Delete</button>
                         </form>
                     </div>
