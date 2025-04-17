@@ -34,24 +34,44 @@ router.get('/new',isloggedIn,(req,res)=>{
 })
 // We are gonna create a show route which will show the details of the campground
 router.get('/:id',isloggedIn, async(req,res)=>{
+
     const campground = await Campground.findById(req.params.id).populate('review').populate('user');
     console.log(campground);
     console.log(campground.user.username);
     res.render('campground/show.ejs',{campground});
 })
 // Edit Router
-router.get('/:id/edit',async(req,res)=>{
-    const campground = await Campground.findById(req.params.id);
+router.get('/:id/edit',isloggedIn,async(req,res)=>{
+    const {id} = req.params;
+    const campground = await Campground.findById(id);
+    if(!campground){
+        req.flash('error','No camp exists!!');
+        return res.redirect('/campgrounds');
+    }
+    if(!campground.user.equals(req.user._id)){
+        req.flash('error', 'You are not authorised to do that!');
+        return res.redirect(`/campgrounds/${id}`)
+    }
     res.render('campground/edit.ejs',{campground});
 })
-router.put('/:id',async(req,res)=>{
+router.put('/:id',isloggedIn,async(req,res)=>{
     const {id} = req.params;
-    const campground = await Campground.findByIdAndUpdate(id,{...req.body.campground});
-    res.redirect(`/campgrounds/${campground._id}`);
+    const campground = await Campground.findById(id);
+    if(!campground.user.equals(req.user._id)){
+        req.flash('error', 'You are not authorised to do that!');
+        return res.redirect(`/campgrounds/${id}`)
+    }
+    const camp = await Campground.findByIdAndUpdate(id,{...req.body.campground});
+    res.redirect(`/campgrounds/${camp._id}`);
 })
 // Delete Route
-router.delete('/:id',async(req,res)=>{
+router.delete('/:id',isloggedIn,async(req,res)=>{
     const {id} = req.params;
+    const campground = await Campground.findById(id);
+    if(!campground.user.equals(req.user._id)){
+        req.flash('error', 'You are not authorised to do that!');
+        return res.redirect(`/campgrounds/${id}`)
+    }
     await Campground.findByIdAndDelete(id);
     req.flash('success','Successfully deleted campground!');
     // This will delete the campground and redirect to the campgrounds page
