@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const methodOverride = require('method-override');
 const Campground = require('../model/campground');
-const {isloggedIn} = require('../middleware');
-const campground = require('../model/campground');
+const {isloggedIn,isUserAuthorised} = require('../middleware');
+// const campground = require('../model/campground');
 router.use(express.urlencoded({extended:true}));
 router.use(methodOverride('-method'));
 router.get('/makecampground',async(req,res)=>{
@@ -41,37 +41,23 @@ router.get('/:id',isloggedIn, async(req,res)=>{
     res.render('campground/show.ejs',{campground});
 })
 // Edit Router
-router.get('/:id/edit',isloggedIn,async(req,res)=>{
+router.get('/:id/edit',isloggedIn,isUserAuthorised,async(req,res)=>{
     const {id} = req.params;
     const campground = await Campground.findById(id);
     if(!campground){
         req.flash('error','No camp exists!!');
         return res.redirect('/campgrounds');
     }
-    if(!campground.user.equals(req.user._id)){
-        req.flash('error', 'You are not authorised to do that!');
-        return res.redirect(`/campgrounds/${id}`)
-    }
     res.render('campground/edit.ejs',{campground});
 })
-router.put('/:id',isloggedIn,async(req,res)=>{
+router.put('/:id',isloggedIn,isUserAuthorised,async(req,res)=>{
     const {id} = req.params;
-    const campground = await Campground.findById(id);
-    if(!campground.user.equals(req.user._id)){
-        req.flash('error', 'You are not authorised to do that!');
-        return res.redirect(`/campgrounds/${id}`)
-    }
     const camp = await Campground.findByIdAndUpdate(id,{...req.body.campground});
     res.redirect(`/campgrounds/${camp._id}`);
 })
 // Delete Route
-router.delete('/:id',isloggedIn,async(req,res)=>{
+router.delete('/:id',isloggedIn,isUserAuthorised,async(req,res)=>{
     const {id} = req.params;
-    const campground = await Campground.findById(id);
-    if(!campground.user.equals(req.user._id)){
-        req.flash('error', 'You are not authorised to do that!');
-        return res.redirect(`/campgrounds/${id}`)
-    }
     await Campground.findByIdAndDelete(id);
     req.flash('success','Successfully deleted campground!');
     // This will delete the campground and redirect to the campgrounds page
