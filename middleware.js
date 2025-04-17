@@ -17,3 +17,12 @@ module.exports.isUserAuthorised= async(req,res,next)=>{
     }
     next();
 }
+module.exports.isReviewAuthorised= async(req,res,next)=>{
+    const {id,reviewId} = req.params;
+    const review = await Campground.findById(reviewId);
+    if(!review.user.equals(req.user._id)){
+        req.flash('error', 'You are not authorised to do that!');
+        return res.redirect(`/campgrounds/${id}`)
+    }
+    next();
+}

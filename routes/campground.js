@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const methodOverride = require('method-override');
 const Campground = require('../model/campground');
+const campgrounds = require('../controllers/campgrounds');
 const {isloggedIn,isUserAuthorised} = require('../middleware');
 // const campground = require('../model/campground');
 router.use(express.urlencoded({extended:true}));
@@ -11,56 +12,17 @@ router.get('/makecampground',async(req,res)=>{
     await camp.save();
     res.send(camp);
 })
-router.get('/',async(req,res)=>{
-    const campgrounds = await Campground.find({});
-    res.render('campground/camp_index.ejs',{campgrounds});
-})
+router.get('/',campgrounds.view_page);
 // This time we'll be creating a form to add a new campground and it should be 
 // post request
 // This will include the post request we're getting from new file
-router.post('/',isloggedIn,async(req,res)=>{
-    console.log(req.body);
-    const camp = new Campground(req.body.campground);
-    console.log(req.user);
-    camp.user = req.user._id;
-    await camp.save();
-    req.flash('success','Successfully made a new campground!');
-    res.redirect(`/campgrounds/${camp._id}`);
-    // It won't parse it inside until we use body-useNewUrlParser
-
-})
-router.get('/new',isloggedIn,(req,res)=>{
-    res.render('campground/new.ejs');
-})
+router.post('/',isloggedIn,campgrounds.createCampground);
+router.get('/new',isloggedIn,campgrounds.new_camp);
 // We are gonna create a show route which will show the details of the campground
-router.get('/:id',isloggedIn, async(req,res)=>{
-
-    const campground = await Campground.findById(req.params.id).populate('review').populate('user');
-    console.log(campground);
-    console.log(campground.user.username);
-    res.render('campground/show.ejs',{campground});
-})
+router.get('/:id',isloggedIn, campgrounds.showCamps);
 // Edit Router
-router.get('/:id/edit',isloggedIn,isUserAuthorised,async(req,res)=>{
-    const {id} = req.params;
-    const campground = await Campground.findById(id);
-    if(!campground){
-        req.flash('error','No camp exists!!');
-        return res.redirect('/campgrounds');
-    }
-    res.render('campground/edit.ejs',{campground});
-})
-router.put('/:id',isloggedIn,isUserAuthorised,async(req,res)=>{
-    const {id} = req.params;
-    const camp = await Campground.findByIdAndUpdate(id,{...req.body.campground});
-    res.redirect(`/campgrounds/${camp._id}`);
-})
+router.get('/:id/edit',isloggedIn,isUserAuthorised,campgrounds.editCampgrounds);
+router.put('/:id',isloggedIn,isUserAuthorised,campgrounds.updateCampgrounds);
 // Delete Route
-router.delete('/:id',isloggedIn,isUserAuthorised,async(req,res)=>{
-    const {id} = req.params;
-    await Campground.findByIdAndDelete(id);
-    req.flash('success','Successfully deleted campground!');
-    // This will delete the campground and redirect to the campgrounds page
-    res.redirect('/campgrounds');
-})
+router.delete('/:id',isloggedIn,isUserAuthorised,campgrounds.deleteCampgrounds);
 module.exports = router;

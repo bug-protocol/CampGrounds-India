@@ -94,11 +94,19 @@
                         <div class="text-yellow-500 text-lg mb-2">
                             <% for (let i = 0; i < each_review.rating; i++) { %> ⭐ <% } %>
                         </div>
+                        <% if (each_review.user && each_review.user.username) { %>
+                            <p>by <%= each_review.user.username %></p>
+                        <% } else { %>
+                            <p>by Anonymous</p>
+                        <% } %>
+                        
                         <p class="text-gray-700"><%= each_review.body %></p>
 
-                        <form action="/campgrounds/<%= campground._id %>/reviews/<%= each_review._id %>?-method=DELETE" method="POST">
+                        <% if (currentUser && each_review.user && each_review.user._id.equals(currentUser._id)) { %>
+                            <form action="/campgrounds/<%= campground._id %>/reviews/<%= each_review._id %>?-method=DELETE" method="POST">
                             <button type="submit" class="text-sm text-red-500 hover:underline mt-2">Delete</button>
                         </form>
+                        <% } %>
                     </div>
                 <% } %>
             </div>
