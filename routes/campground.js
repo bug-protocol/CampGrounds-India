@@ -6,7 +6,8 @@ const campgrounds = require('../controllers/campgrounds');
 const {isloggedIn,isUserAuthorised} = require('../middleware');
 // The multer use
 const multer = require('multer');
-const upload = multer({dest : 'uploads/'})
+const {storage} = require('../cloudinary');
+const upload = multer({storage})
 // const campground = require('../model/campground');
 router.use(express.urlencoded({extended:true}));
 router.use(methodOverride('-method'));
