@@ -9,9 +9,11 @@ module.exports.new_camp = (req,res)=>{
 module.exports.createCampground = async(req,res)=>{
     console.log(req.body);
     const camp = new Campground(req.body.campground);
-    console.log(req.user);
+    // console.log(req.user);
+    camp.image = req.files.map(f=>({url: f.path, filename: f.filename}));
     camp.user = req.user._id;
     await camp.save();
+    console.log(camp);
     req.flash('success','Successfully made a new campground!');
     res.redirect(`/campgrounds/${camp._id}`);
     // It won't parse it inside until we use body-useNewUrlParser

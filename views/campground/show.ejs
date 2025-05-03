@@ -13,7 +13,9 @@
             <h3 class="text-xl font-bold text-green-600 mt-2">₹<%= campground.price %> per Night</h3>
             
             <div class="w-full h-[300px] mt-4 rounded-lg overflow-hidden">
-                <img src="<%= campground.image %>" class="w-full h-full object-cover" alt="Campground Image">
+                <% for(let img of campground.image){ %>
+                <img src="<%= img.url %>" class="w-full h-full object-cover" alt="Campground Image">
+                <%}%>
             </div>
             
             <h3 class="text-md text-gray-500 mt-2">Posted by <span class="font-semibold"><%= campground.user.username %></span></h3>
