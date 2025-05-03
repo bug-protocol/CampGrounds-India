@@ -12,11 +12,23 @@
             <h3 class="text-lg text-gray-600 mt-1"><%= campground.location %></h3>
             <h3 class="text-xl font-bold text-green-600 mt-2">₹<%= campground.price %> per Night</h3>
             
-            <div class="w-full h-[300px] mt-4 rounded-lg overflow-hidden">
-                <% for(let img of campground.image){ %>
-                <img src="<%= img.url %>" class="w-full h-full object-cover" alt="Campground Image">
-                <%}%>
-            </div>
+            <!-- Image Carousel -->
+<div class="relative w-full h-[300px] mt-4 rounded-lg overflow-hidden shadow-md">
+    <div id="carousel" class="flex transition-transform ease-in-out duration-500 w-full h-full" data-index="0">
+        <% campground.image.forEach(img => { %>
+            <img src="<%= img.url %>" alt="Campground Image" class="w-full h-full object-cover flex-shrink-0">
+        <% }); %>
+    </div>
+
+    <!-- Prev / Next Buttons -->
+    <button onclick="prevSlide()" class="absolute left-3 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 hover:bg-opacity-100 text-gray-800 p-2 rounded-full z-10">
+        &#10094;
+    </button>
+    <button onclick="nextSlide()" class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 hover:bg-opacity-100 text-gray-800 p-2 rounded-full z-10">
+        &#10095;
+    </button>
+</div>
+
             
             <h3 class="text-md text-gray-500 mt-2">Posted by <span class="font-semibold"><%= campground.user.username %></span></h3>
             
@@ -129,4 +141,26 @@
             alert("Please provide both a rating and a review before submitting.");
         }
     });
+</script>
+<script>
+    function prevSlide() {
+        const carousel = document.getElementById('carousel');
+        let index = parseInt(carousel.getAttribute('data-index'));
+        if (index > 0) {
+            index--;
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+            carousel.setAttribute('data-index', index);
+        }
+    }
+
+    function nextSlide() {
+        const carousel = document.getElementById('carousel');
+        const total = carousel.children.length;
+        let index = parseInt(carousel.getAttribute('data-index'));
+        if (index < total - 1) {
+            index++;
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+            carousel.setAttribute('data-index', index);
+        }
+    }
 </script>
