@@ -1,9 +1,11 @@
 {
   "name": "campgrounds-india",
   "version": "1.0.0",
-  "description": "A full-stack campground app inspired by YelpCamp, built with MERN stack and Tailwind CSS. It features user authentication, interactive maps, campground CRUD operations, and real-time reviews. With secure APIs and optimized data handling, it provides a seamless experience for exploring and reviewing campgrounds across India. 🚀",
+  "description": "A full-stack campground app inspired by YelpCamp…",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,13 +31,13 @@
     "mongoose": "^8.10.1",
     "multer": "^1.4.5-lts.2",
     "multer-storage-cloudinary": "^4.0.0",
-    "nodemon": "^3.1.9",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "nodemon": "^3.1.10",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.0.14"
   }

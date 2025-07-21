@@ -1,119 +1,101 @@
-    <% layout('layout/boilerplate.ejs') %>
-    <div class="flex justify-center items-center min-h-screen bg-gray-100">
-        <div class="bg-white shadow-lg rounded-lg p-6 w-[400px]">
-          <h1 class="text-2xl font-bold text-gray-800 text-center mb-4">Edit Campground</h1>
-      
-          <form id="editCampForm" action="/campgrounds/<%= campground._id %>?-method=PUT" method="post" class="space-y-4" novalidate>
-            <!-- Title -->
-            <div>
-              <label for="title" class="text-lg font-medium text-gray-700">Title</label>
-              <input type="text" id="title" name="campground[title]" value="<%= campground.title %>" required
-                     class="validate-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
-                     placeholder="Enter title">
-              <span class="text-red-500 text-sm hidden">Title is required.</span>
-            </div>
-      
-            <!-- Location -->
-            <div>
-              <label for="location" class="text-lg font-medium text-gray-700">Location</label>
-              <input type="text" id="location" name="campground[location]" value="<%= campground.location %>" required
-                     class="validate-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                     placeholder="Enter location">
-              <span class="text-red-500 text-sm hidden">Location is required.</span>
-            </div>
-      
-            <!-- Description -->
-            <div>
-              <label for="description" class="text-lg font-medium text-gray-700">Description</label>
-              <textarea id="description" name="campground[description]" rows="3" required
-                        class="validate-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Describe your camp"><%= campground.description %></textarea>
-              <span class="text-red-500 text-sm hidden">Description is required.</span>
-            </div>
-      
-            <!-- Image URL -->
-            <div>
-              <label for="image" class="text-lg font-medium text-gray-700">Image URL</label>
-              <input type="text" id="image" name="campground[image]" value="<%= campground.image %>" required
-                     class="validate-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                     placeholder="https://example.com/image.jpg">
-              <span class="text-red-500 text-sm hidden">Valid Image URL is required.</span>
-            </div>
-      
-            <!-- Price -->
-            <div class="relative">
-              <label for="price" class="text-lg font-medium text-gray-700">Price</label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-3 flex items-center text-gray-600 text-lg">₹</span>
-                <input type="text" id="price" name="campground[price]" value="<%= campground.price %>" required
-                       class="validate-input w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                       placeholder="Enter price">
-              </div>
-              <span class="text-red-500 text-sm hidden">Price is required and must be a valid number.</span>
-            </div>
-      
-            <!-- Buttons -->
-            <div class="flex justify-between items-center mt-4">
-              <button type="submit" 
-                      class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
-                Update Camp
-              </button>
-      
-              <a href="/campgrounds/<%= campground._id %>"
-                 class="py-2 px-4 bg-gray-300 text-gray-800 font-semibold rounded-lg hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400">
-                Back to Camp
-              </a>
-            </div>
-          </form>
-        </div>
+<% layout('layout/boilerplate.ejs') %>
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="bg-white shadow-lg rounded-lg p-6 w-[400px]">
+    <h1 class="text-2xl font-bold text-gray-800 text-center mb-4">Edit Campground</h1>
+
+    <form id="editCampForm" action="/campgrounds/<%= campground._id %>?_method=PUT" method="post" enctype="multipart/form-data" class="space-y-4" novalidate>
+      <!-- Title -->
+      <div>
+        <label for="title" class="text-lg font-medium text-gray-700">Title</label>
+        <input type="text" id="title" name="campground[title]" value="<%= campground.title %>" required
+               class="validate-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" 
+               placeholder="Enter title">
+        <span class="text-red-500 text-sm hidden">Title is required.</span>
       </div>
-      
-      <script>
-        const form = document.getElementById('editCampForm');
-        const inputs = form.querySelectorAll('.validate-input');
-      
-        // Validate on form submission
-        form.addEventListener('submit', function (e) {
-          let isValid = true;
-      
-          inputs.forEach(input => {
-            // Find the nearest error span in the same container
-            const parentDiv = input.closest('div');
-            const errorSpan = parentDiv.querySelector('span.text-red-500');
-      
-            if (!input.checkValidity()) {
-              input.classList.add('border-red-500');
-              input.classList.remove('border-gray-300', 'border-green-500');
-              if (errorSpan) errorSpan.classList.remove('hidden');
-              isValid = false;
-            } else {
-              input.classList.remove('border-red-500', 'border-gray-300');
-              input.classList.add('border-green-500');
-              if (errorSpan) errorSpan.classList.add('hidden');
-            }
-          });
-      
-          if (!isValid) {
-            e.preventDefault(); // Prevent form submission if validation fails
-          }
-        });
-      
-        // Optional: Live feedback while typing
-        inputs.forEach(input => {
-          input.addEventListener('input', () => {
-            const parentDiv = input.closest('div');
-            const errorSpan = parentDiv.querySelector('span.text-red-500');
-      
-            if (!input.checkValidity()) {
-              input.classList.add('border-red-500');
-              input.classList.remove('border-gray-300', 'border-green-500');
-              if (errorSpan) errorSpan.classList.remove('hidden');
-            } else {
-              input.classList.remove('border-red-500', 'border-gray-300');
-              input.classList.add('border-green-500');
-              if (errorSpan) errorSpan.classList.add('hidden');
-            }
-          });
-        });
-      </script>
-      
+
+      <!-- Location -->
+      <div>
+        <label for="location" class="text-lg font-medium text-gray-700">Location</label>
+        <input type="text" id="location" name="campground[location]" value="<%= campground.location %>" required
+               class="validate-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+               placeholder="Enter location">
+        <span class="text-red-500 text-sm hidden">Location is required.</span>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <label for="description" class="text-lg font-medium text-gray-700">Description</label>
+        <textarea id="description" name="campground[description]" rows="3" required
+                  class="validate-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Describe your camp"><%= campground.description %></textarea>
+        <span class="text-red-500 text-sm hidden">Description is required.</span>
+      </div>
+
+      <!-- Image Upload -->
+      <div>
+        <label for="imageUpload" class="text-lg font-medium text-gray-700">Image</label>
+        <div class="flex items-center">
+          <label for="imageUpload" class="cursor-pointer px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V7M16 3l4 4m0 0l-4 4m4-4H8" />
+            </svg>
+            Choose Image
+          </label>
+          <span id="fileName" class="ml-3 text-gray-600 italic">No file selected</span>
+        </div>
+        <input type="file" id="imageUpload" name="campground[image]" accept="image/*" class="hidden validate-input" required>
+        <span class="text-red-500 text-sm hidden">Please select an image.</span>
+      </div>
+
+      <!-- Price -->
+      <div class="relative">
+        <label for="price" class="text-lg font-medium text-gray-700">Price</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-3 flex items-center text-gray-600 text-lg">₹</span>
+          <input type="text" id="price" name="campground[price]" value="<%= campground.price %>" required
+                 class="validate-input w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                 placeholder="Enter price">
+        </div>
+        <span class="text-red-500 text-sm hidden">Price is required and must be a valid number.</span>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-between items-center mt-4">
+        <button type="submit" class="py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+          Update Camp
+        </button>
+        <a href="/campgrounds/<%= campground._id %>" class="py-2 px-4 bg-gray-300 text-gray-800 font-semibold rounded-lg hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400">
+          Back to Camp
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('editCampForm');
+  const fileInput = document.getElementById('imageUpload');
+  const fileName = document.getElementById('fileName');
+  const inputs = form.querySelectorAll('.validate-input');
+
+  fileInput.addEventListener('change', () => {
+    fileName.textContent = fileInput.files[0] ? fileInput.files[0].name : 'No file selected';
+  });
+
+  form.addEventListener('submit', function (e) {
+    let isValid = true;
+    inputs.forEach(input => {
+      const parent = input.closest('div');
+      const error = parent.querySelector('span.text-red-500');
+      if (!input.checkValidity()) {
+        input.classList.add('border-red-500');
+        if (error) error.classList.remove('hidden');
+        isValid = false;
+      } else {
+        input.classList.remove('border-red-500');
+        if (error) error.classList.add('hidden');
+      }
+    });
+    if (!isValid) e.preventDefault();
+  });
+</script>

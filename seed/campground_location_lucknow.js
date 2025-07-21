@@ -6,7 +6,12 @@ const campingLocations = [
       longitude: 80.9462,
       description: "A peaceful riverside camping spot with beautiful views and bonfire nights.",
       facilities: ["Tents", "Fishing", "Bonfire", "Hiking"],
-      image: "https://www.trawell.in/admin/images/upload/006238722Gomti_Riverfront.jpg",
+      image: [
+        {
+          url: 'https://res.cloudinary.com/stevecloudforce/image/upload/v1746267503/CampGrounds-India/nzwllg1o7gozwgfb4tmk.jpg',    
+          filename: 'CampGrounds-India/nzwllg1o7gozwgfb4tmk'
+        }
+      ],
       price: "1500"
     },
     {
@@ -16,7 +21,12 @@ const campingLocations = [
       longitude: 80.5715,
       description: "Experience wildlife camping near Lucknow with jungle safaris and nature trails.",
       facilities: ["Safari Tours", "Bird Watching", "Tents", "Local Cuisine"],
-      image: "https://media-cdn.tripadvisor.com/media/photo-s/07/28/60/35/mowgleez-restaurant-and.jpg",
+      image: [
+        {
+          url: 'https://res.cloudinary.com/stevecloudforce/image/upload/v1746267626/CampGrounds-India/ugz3y49d9tsf4hcpd5vx.jpg',    
+          filename: 'CampGrounds-India/ugz3y49d9tsf4hcpd5vx'
+        }
+      ],
       price: "2500"
     },
     {
@@ -26,7 +36,12 @@ const campingLocations = [
       longitude: 81.0067,
       description: "Enjoy camping near the lake with kayaking and stargazing activities.",
       facilities: ["Kayaking", "Campfire", "Night Trekking", "Photography"],
-      image: "https://i.ytimg.com/vi/9G7L0tfooDk/maxresdefault.jpg",
+      image: [
+        {
+          url: 'https://res.cloudinary.com/stevecloudforce/image/upload/v1746267709/CampGrounds-India/ztfc6xt3kjaguf1ctlcs.jpg',    
+          filename: 'CampGrounds-India/ztfc6xt3kjaguf1ctlcs'
+        }
+      ],
       price: "1800"
     },
     {
@@ -36,7 +51,12 @@ const campingLocations = [
       longitude: 80.7942,
       description: "A serene camping spot for bird lovers, with guided tours and nature walks.",
       facilities: ["Bird Watching", "Guided Walks", "Eco-Tents", "Local Food"],
-      image: "https://travelophia.com/wp-content/uploads/2023/06/nawabganj-bird-sanctuary-1-scaled.webp",
+      image: [
+        {
+          url: 'https://res.cloudinary.com/stevecloudforce/image/upload/v1746267880/CampGrounds-India/wxruidaibduak1fkonh0.jpg',    
+          filename: 'CampGrounds-India/wxruidaibduak1fkonh0'
+        }
+      ],
       price: "2000"
     }
   ];

@@ -1,3 +1,4 @@
+const Review = require('./model/review'); 
 const Campground = require('./model/campground');
 module.exports.isloggedIn = (req,res,next)=>{
     console.log("REQ.USER...",req.user);
@@ -19,7 +20,7 @@ module.exports.isUserAuthorised= async(req,res,next)=>{
 }
 module.exports.isReviewAuthorised= async(req,res,next)=>{
     const {id,reviewId} = req.params;
-    const review = await Campground.findById(reviewId);
+    const review = await Review.findById(reviewId);
     if(!review.user.equals(req.user._id)){
         req.flash('error', 'You are not authorised to do that!');
         return res.redirect(`/campgrounds/${id}`)

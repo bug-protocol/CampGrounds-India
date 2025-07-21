@@ -1,3 +1,6 @@
+const Campground = require('../model/campground');
+const Review     = require('../model/review');
+
 module.exports.createReview = async(req,res)=>{
     const campground = await Campground.findById(req.params.id);
     const review_drop = new Review(req.body.review);

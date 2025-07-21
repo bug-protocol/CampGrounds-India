@@ -35,6 +35,8 @@ db.once('open',()=>{
 })
 const app = express();
 
+//Method Override
+app.use(methodOverride('-method'));
 // Express Sessions
 const sessionConfig = {
     secret:'tryingoutsession',
@@ -73,8 +75,6 @@ app.use('/campgrounds/:id/reviews',reviews);
 app.engine('ejs',ejsMate);
 app.set('view engine','ejs');
 app.set('views', path.join(__dirname,'views'));
-//Method Override
-app.use(methodOverride('-method'));
 
 
 // Constructing the server port

@@ -8,7 +8,7 @@ const methodOverride = require('method-override');
 const reviews = require('../controllers/reviews.js');
 router.use(methodOverride('-method'));
 // Adding a post request for review form
-router.post('/',isloggedIn,isReviewAuthorised,reviews.createReview);
+router.post('/',isloggedIn, reviews.createReview);
 
 // Delete reviews
 router.delete('/:reviewId',isloggedIn,isReviewAuthorised,reviews.deleteReview);

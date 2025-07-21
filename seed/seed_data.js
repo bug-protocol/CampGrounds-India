@@ -13,7 +13,7 @@ const seedDB = async()=>{
         const camp = new Campground({
             user : '67f408ec4297911a5ca62e63',
             title: `${sel.name}`,
-            image: `${sel.image}`,
+            image: sel.image,
             price : `${sel.price}`,
             description : `${sel.description}`,
             location : `${sel.location}`
