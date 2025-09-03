@@ -1,4 +1,6 @@
 const Campground = require('../model/campground');
+const maptilerClient = require("@maptiler/client");
+maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 module.exports.view_page = async(req,res)=>{
     const campgrounds = await Campground.find({});
     res.render('campground/camp_index.ejs',{campgrounds});
@@ -7,7 +9,10 @@ module.exports.new_camp = (req,res)=>{
     res.render('campground/new.ejs');
 }
 module.exports.createCampground = async(req,res)=>{
-    console.log(req.body);
+    // console.log(req.body);
+    const geoData = await maptilerClient.geocoding.forward(req.body.campground.location, { limit: 1 });
+const campground = new Campground(req.body.campground);
+campground.geometry = geoData.features[0].geometry;
     const camp = new Campground(req.body.campground);
     // console.log(req.user);
     camp.image = req.files.map(f=>({url: f.path, filename: f.filename}));
@@ -43,6 +48,8 @@ module.exports.editCampgrounds = async(req,res)=>{
 module.exports.updateCampgrounds = async(req,res)=>{
     const {id} = req.params;
     const camp = await Campground.findByIdAndUpdate(id,{...req.body.campground});
+    const geoData = await maptilerClient.geocoding.forward(req.body.campground.location, { limit: 1 });
+    campground.geometry = geoData.features[0].geometry;
     res.redirect(`/campgrounds/${camp._id}`);
 }
 module.exports.deleteCampgrounds = async(req,res)=>{
