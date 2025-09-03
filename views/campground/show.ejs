@@ -2,14 +2,14 @@
 
 <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
 
-  <!-- Three Column Layout -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full max-w-7xl">
+  <!-- Top: Image + Map -->
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-8 w-full max-w-7xl px-4 mt-6">
 
-    <!-- Column 1: Campground Card -->
-    <div class="p-8 rounded-lg shadow-2xl border border-gray-300 bg-white overflow-hidden">
+    <!-- Left: Campground Card (image + details + actions) -->
+    <div class="md:col-span-6 p-6 rounded-lg shadow-2xl border border-gray-300 bg-white overflow-hidden">
       <h2 class="text-2xl font-semibold text-gray-800"><%= campground.title %></h2>
       <h3 class="text-lg text-gray-600 mt-1"><%= campground.location %></h3>
-      <h3 class="text-xl font-bold text-green-600 mt-2">₹<%= campground.price %> per Night</h3>
+      <h3 class="text-xl font-bold text-green-600 mt-2">₹<%= campground.price %> / night</h3>
 
       <!-- Image Carousel -->
       <div class="relative w-full h-[400px] mt-4 rounded-lg overflow-hidden shadow-md">
@@ -18,39 +18,52 @@
             <img src="<%= img.url %>" alt="Campground Image" class="w-full h-full object-cover flex-shrink-0">
           <% }); %>
         </div>
-
-        <button onclick="prevSlide()" class="absolute left-3 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 hover:bg-opacity-100 text-gray-800 p-2 rounded-full z-10">&#10094;</button>
-        <button onclick="nextSlide()" class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 hover:bg-opacity-100 text-gray-800 p-2 rounded-full z-10">&#10095;</button>
+        <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-white bg-opacity-75 hover:bg-opacity-100 text-gray-800 p-2 rounded-full">&#10094;</button>
+        <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-white bg-opacity-75 hover:bg-opacity-100 text-gray-800 p-2 rounded-full">&#10095;</button>
       </div>
 
       <h3 class="text-md text-gray-500 mt-2">Posted by <span class="font-semibold"><%= campground.user.username %></span></h3>
 
-      <% if(currentUser && campground.user.equals(currentUser._id)){ %>
+      <!-- Action Buttons (auth-gated) -->
+      <% if (currentUser && campground.user.equals(currentUser._id)) { %>
         <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-6">
-          <a href="/campgrounds/<%= campground._id %>/edit" class="min-w-[140px] w-full md:w-auto text-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600">Edit Camp</a>
+          <a href="/campgrounds/<%= campground._id %>/edit"
+             class="min-w-[140px] w-full md:w-auto text-center py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600">
+            Edit Camp
+          </a>
 
           <form action="/campgrounds/<%= campground._id %>?-method=DELETE" method="POST">
-            <button type="submit" class="min-w-[140px] w-full md:w-auto py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600">Delete Camp</button>
+            <button type="submit"
+                    class="min-w-[140px] w-full md:w-auto py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600">
+              Delete Camp
+            </button>
           </form>
 
-          <a href="/campgrounds" class="min-w-[140px] w-full md:w-auto text-center py-2 px-4 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600">All Camps</a>
+          <a href="/campgrounds"
+             class="min-w-[140px] w-full md:w-auto text-center py-2 px-4 bg-gray-500 text-white font-semibold rounded-lg hover:bg-gray-600">
+            All Camps
+          </a>
         </div>
       <% } %>
     </div>
 
-    <!-- Column 2: Map -->
-    <div id="mapCard" class="rounded-lg shadow-2xl border border-gray-300 bg-white p-2 flex items-center justify-center">
-      <div id="map" class="w-full h-96 rounded-lg shadow-inner bg-gray-50" style="min-height:400px;"></div>
+    <!-- Right: Map -->
+    <div class="md:col-span-6 rounded-lg shadow-2xl border border-gray-300 bg-white p-2 flex items-center justify-center">
+      <div id="map" class="w-full h-[400px] rounded-lg shadow-inner bg-gray-50"></div>
     </div>
+  </div>
 
-    <!-- Column 3: Reviews -->
-    <div class="flex flex-col gap-8">
-      <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 w-full space-y-6" novalidate id="reviewForm">
-        <h2 class="text-2xl font-semibold text-gray-800">Write a Review</h2>
+  <!-- Bottom: Reviews (full width) -->
+  <div class="w-full max-w-7xl px-4 mt-10">
+    <div class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 space-y-6">
 
-        <div class="flex flex-col space-y-2">
-          <label for="rating" class="text-gray-700 font-medium">Rating</label>
-          <select id="rating" name="review[rating]" required class="border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <h2 class="text-2xl font-semibold text-gray-800">Reviews</h2>
+
+      <!-- Write Review -->
+      <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="space-y-4" novalidate id="reviewForm">
+        <div>
+          <label for="rating" class="block text-gray-700 font-medium">Rating</label>
+          <select id="rating" name="review[rating]" required class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-blue-500">
             <option value="">Select Rating</option>
             <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
             <option value="4">⭐⭐⭐⭐ - Good</option>
@@ -60,34 +73,28 @@
           </select>
         </div>
 
-        <div class="flex flex-col space-y-2">
-          <label for="body" class="text-gray-700 font-medium">Review</label>
-          <textarea id="body" name="review[body]" rows="4" required class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Write your review here..."></textarea>
+        <div>
+          <label for="body" class="block text-gray-700 font-medium">Review</label>
+          <textarea id="body" name="review[body]" rows="4" required class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-500" placeholder="Write your review..."></textarea>
         </div>
 
-        <div class="text-right">
-          <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Submit</button>
-        </div>
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Submit</button>
       </form>
 
-      <div class="bg-white p-8 rounded-lg shadow-2xl border border-gray-300 w-full space-y-4">
-        <h2 class="text-2xl font-semibold text-gray-800">Reviews</h2>
+      <!-- Reviews List -->
+      <div class="space-y-4">
         <% if (campground.review.length === 0) { %>
           <p class="text-gray-600">No reviews yet. Be the first to write one!</p>
         <% } %>
 
         <% for (let each_review of campground.review) { %>
-          <div class="bg-gray-100 p-4 rounded-lg shadow-md">
+          <div class="bg-gray-50 p-4 rounded-lg shadow-md">
             <div class="text-yellow-500 text-lg mb-2">
               <% for (let i = 0; i < each_review.rating; i++) { %> ⭐ <% } %>
             </div>
-
-            <% if (each_review.user && each_review.user.username) { %>
-              <p>by <%= each_review.user.username %></p>
-            <% } else { %>
-              <p>by Anonymous</p>
-            <% } %>
-
+            <p class="text-sm text-gray-600 mb-1">
+              by <%= each_review.user ? each_review.user.username : "Anonymous" %>
+            </p>
             <p class="text-gray-700"><%= each_review.body %></p>
 
             <% if (currentUser && each_review.user && each_review.user._id.equals(currentUser._id)) { %>
@@ -98,6 +105,7 @@
           </div>
         <% } %>
       </div>
+
     </div>
   </div>
 </div>
@@ -106,34 +114,44 @@
 <script>
   function prevSlide() {
     const carousel = document.getElementById('carousel');
-    let index = parseInt(carousel.getAttribute('data-index'));
+    let index = parseInt(carousel.dataset.index);
     if (index > 0) {
       index--;
       carousel.style.transform = `translateX(-${index * 100}%)`;
-      carousel.setAttribute('data-index', index);
+      carousel.dataset.index = index;
     }
   }
   function nextSlide() {
     const carousel = document.getElementById('carousel');
+    let index = parseInt(carousel.dataset.index);
     const total = carousel.children.length;
-    let index = parseInt(carousel.getAttribute('data-index'));
     if (index < total - 1) {
       index++;
       carousel.style.transform = `translateX(-${index * 100}%)`;
-      carousel.setAttribute('data-index', index);
+      carousel.dataset.index = index;
     }
   }
+
+  // Simple client-side validation
+  document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
+    const rating = document.getElementById('rating').value;
+    const body = document.getElementById('body').value.trim();
+    if (!rating || !body) {
+      e.preventDefault();
+      alert('Please provide both a rating and a review before submitting.');
+    }
+  });
 </script>
 
 <!-- Map Data (exact formatting required) -->
 <script>
-  const maptilerApiKey = "<%= process.env.MAPTILER_API_KEY %>";
+  const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
   const campground = <%- JSON.stringify(campground) %>
 </script>
 
-<!-- MapTiler SDK (v2.0.3) -->
+<!-- MapTiler SDK -->
 <link crossorigin="anonymous" href="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.css" rel="stylesheet">
 <script crossorigin="anonymous" src="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.umd.min.js"></script>
 
 <!-- Your Map Script -->
-<script src="/javascripts/showPageMap.js"></script>
+<script src="/javascript/showPageMap.js"></script>
