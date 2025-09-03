@@ -1,3 +1,4 @@
+const { coordinates } = require('@maptiler/client');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // Used for creating Schema for campground
@@ -9,6 +10,17 @@ const CampgroundSchema = new Schema ({
             filename: String
         }
     ],
+    geometry : {
+        type : {
+            type : String,
+            enum : ['Point'],
+            required : true
+        },
+        coordinates: {
+            type : [Number],
+            required : true
+        }
+    },
     price : String,
     description : String,
     location : String,
