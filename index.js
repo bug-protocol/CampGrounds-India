@@ -19,7 +19,7 @@ const userRoutes = require('./routes/user.js');
 const campgrounds = require('./routes/campground.js');
 const reviews = require('./routes/reviews.js');
 // Connecting to the database
-mongoose.connect('mongodb://localhost:27017/Grounds-Database');
+mongoose.connect(process.env.DB_URL);
 
 // Not inserting few conditions like useNewUrlParser, useUnifiedTopology,
 // useCreateIndex, useFindAndModify
