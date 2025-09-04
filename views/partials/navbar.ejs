@@ -2,38 +2,39 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16 items-center">
       <!-- Logo -->
-      <div class="flex-shrink-0 flex items-center">
-        <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=emerald&shade=500" alt="CampGrounds India Logo">
-        <span class="ml-2 font-semibold text-xl text-[#d5cfc4]">CampGrounds India</span>
+      <div class="flex items-center space-x-2">
+        <img class="h-9 w-9" src="https://img.icons8.com/ios-filled/50/4ade80/forest.png" alt="Camp Logo">
+        <span class="font-bold text-2xl text-[#d5cfc4] tracking-wide">CampGrounds India</span>
       </div>
 
-      <!-- Desktop menu -->
-      <div class="hidden sm:flex sm:items-center sm:space-x-4">
-        <a href="/" class="px-3 py-2 rounded-md text-sm font-medium bg-emerald-700 text-white hover:bg-emerald-600">Home</a>
-        <a href="/campgrounds" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">All Camps</a>
-        <a href="/campgrounds/new" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Add New Camp</a>
-        <a href="/calendar" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
+      <!-- Desktop Menu -->
+      <div class="hidden sm:flex sm:items-center sm:space-x-6">
+        <a href="/" class="px-3 py-2 rounded-md text-sm font-medium bg-emerald-700 text-white hover:bg-emerald-600 transition">Home</a>
+        <a href="/campgrounds" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition">All Camps</a>
+        <a href="/campgrounds/new" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition">Add New Camp</a>
+        <a href="/calendar" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition">Calendar</a>
       </div>
 
       <!-- Auth Buttons -->
       <div class="hidden sm:flex sm:items-center sm:space-x-4">
         <% if (!currentUser) { %>
-          <a href="/login" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
-          <a href="/register" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Register</a>
+          <a href="/login" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition">Login</a>
+          <a href="/register" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 transition">Register</a>
         <% } else { %>
           <form action="/logout" method="POST">
-            <button type="submit" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-red-600 hover:text-white">Logout</button>
+            <button type="submit" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-red-600 hover:text-white transition">Logout</button>
           </form>
         <% } %>
       </div>
-      
 
       <!-- Mobile menu button -->
       <div class="sm:hidden">
-        <button id="mobile-menu-button" class="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
-          <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16" />
+        <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+          <svg id="hamburger-icon" class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg id="close-icon" class="h-7 w-7 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
@@ -41,13 +42,12 @@
   </div>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden sm:hidden px-2 pt-2 pb-3 space-y-1">
+  <div id="mobile-menu" class="hidden sm:hidden px-2 pt-2 pb-3 space-y-1 bg-[#1b1f1d]">
     <a href="/" class="block px-3 py-2 rounded-md text-base font-medium bg-emerald-700 text-white">Home</a>
     <a href="/campgrounds" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">All Camps</a>
     <a href="/campgrounds/new" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Add New Camp</a>
     <a href="/calendar" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
     
-    <!-- Auth Mobile -->
     <% if (!currentUser) { %>
       <a href="/login" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Login</a>
       <a href="/register" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Register</a>
@@ -56,18 +56,19 @@
         <button type="submit" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-red-600 hover:text-white">Logout</button>
       </form>
     <% } %>
-    
-        <!-- Logged-in state -->
-    <!-- <form action="/logout" method="POST">
-      <button type="submit" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-red-600 hover:text-white">Logout</button>
-    </form> -->
   </div>
 </nav>
 
 <script>
   // Toggle mobile menu
-  document.getElementById("mobile-menu-button").addEventListener("click", () => {
-    const menu = document.getElementById("mobile-menu");
+  const menuBtn = document.getElementById("mobile-menu-button");
+  const menu = document.getElementById("mobile-menu");
+  const hamburgerIcon = document.getElementById("hamburger-icon");
+  const closeIcon = document.getElementById("close-icon");
+
+  menuBtn.addEventListener("click", () => {
     menu.classList.toggle("hidden");
+    hamburgerIcon.classList.toggle("hidden");
+    closeIcon.classList.toggle("hidden");
   });
 </script>

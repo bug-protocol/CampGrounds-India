@@ -81,13 +81,13 @@ app.set('views', path.join(__dirname,'views'));
 app.listen('4000',()=>{
     console.log("Starting the Server");
 })
-// This is the default route
-app.get ('/',(req,res)=>{
-    res.send("This is the Default output!!");
-    // res.render('home');
-})
 
 // This is the home route
 app.get('/home',(req,res)=>{
-    res.render('home');
+    res.render('home.ejs');
+})
+
+// This is the default route
+app.get ('/',(req,res)=>{
+    res.redirect('/home');
 })
