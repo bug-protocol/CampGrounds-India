@@ -6,6 +6,9 @@
     <title>Lucknow Locations</title>
 </head> -->
 <%layout('layout/boilerplate.ejs') %>
+<!-- Map Section -->
+<div id="map" class="w-[90%] h-[500px] mx-auto mt-8 rounded-lg shadow-md border border-gray-300"></div>
+
 <!-- <body> -->
     <h2 class="text-4xl font-bold text-gray-800">These are the Prime camping locations in Lucknow</h2>
     <div class="mt-7">
@@ -37,3 +40,7 @@
         <%}%>
 <!-- </body>
 </html> -->
+<script>
+  const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
+</script>
+<script src="/javascript/clusterMap.js"></script>
