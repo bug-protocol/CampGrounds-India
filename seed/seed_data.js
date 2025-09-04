@@ -15,6 +15,13 @@ const seedDB = async()=>{
             title: `${sel.name}`,
             image: sel.image,
             price : `${sel.price}`,
+            geometry : {
+                type: "Point",
+                coordinates : [
+                    `${sel.longitude}`,
+                    `${sel.latitude}`,
+                ]
+            },
             description : `${sel.description}`,
             location : `${sel.location}`
         }); 
