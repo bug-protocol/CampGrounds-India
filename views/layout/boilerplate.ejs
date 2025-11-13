@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>"CampGrounds-India"</title>
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN (you can keep this for now) -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Custom Tailwind Config -->
@@ -14,7 +14,7 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1E40AF',  /* Blue */
+                        primary: '#1E40AF',
                         secondary: '#64748B'
                     }
                 }
@@ -22,12 +22,11 @@
         };
     </script>
 
-    <!-- MapTiler SDK -->
-    <script crossorigin="anonymous" src="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.umd.min.js"></script>
-    <link crossorigin="anonymous" href="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.css" rel="stylesheet">
+    <!-- LOCAL MapTiler CSS (REQUIRED — replaces CDN version) -->
+    <link rel="stylesheet" href="/maptiler-sdk.css">
 
     <style>
-        body { color: #1E40AF; } /* Forces text to be blue */
+        body { color: #1E40AF; }
         #map {
             width: 100%;
             height: 400px;
@@ -40,7 +39,6 @@
 
     <div class="text-center mt-6">
         <%- include('../partials/flashes') %>
-
         <%- body %>  <!-- Dynamic content -->
     </div>
 

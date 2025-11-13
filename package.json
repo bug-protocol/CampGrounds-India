@@ -4,9 +4,11 @@
   "description": "A full-stack campground app inspired by YelpCamp…",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "dev": "nodemon index.js",
+  "vite": "vite",
+  "build": "vite build",
+  "start": "node index.js",
+  "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   "homepage": "https://github.com/bug-protocol/CampGrounds-India#readme",
   "dependencies": {
     "@maptiler/client": "^1.8.1",
+    "@maptiler/sdk": "^3.8.0",
     "@tailwindcss/postcss": "^4.0.14",
     "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
@@ -40,6 +43,7 @@
     "autoprefixer": "^10.4.21",
     "nodemon": "^3.1.10",
     "postcss": "^8.5.3",
-    "tailwindcss": "^4.0.14"
+    "tailwindcss": "^4.0.14",
+    "vite": "^7.2.2"
   }
 }

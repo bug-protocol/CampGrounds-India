@@ -58,6 +58,10 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());   
 app.use(express.static(path.join(__dirname,'public')));
+
+// For maptiler
+app.use('/node_modules', express.static(path.join(__dirname, 'node_modules')));
+
 // This is the middleware for flash messages
 app.use((req,res,next)=>{
     res.locals.currentUser = req.user;
