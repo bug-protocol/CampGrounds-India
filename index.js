@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV !== "production"){
     require('dotenv').config();
 }
-console.log("SECRET:", process.env.SECRET);
+// console.log("SECRET:", process.env.SECRET);
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -19,7 +19,10 @@ const userRoutes = require('./routes/user.js');
 const campgrounds = require('./routes/campground.js');
 const reviews = require('./routes/reviews.js');
 // Connecting to the database
-mongoose.connect(process.env.DB_URL);
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/campgrounds';
+
+mongoose.connect(dbUrl);
+
 
 // Not inserting few conditions like useNewUrlParser, useUnifiedTopology,
 // useCreateIndex, useFindAndModify
@@ -39,15 +42,16 @@ const app = express();
 app.use(methodOverride('-method'));
 // Express Sessions
 const sessionConfig = {
-    secret:'tryingoutsession',
-    resave:false,
-    saveUninitialized:true,
-    cookie:{
-        httpOnly:true,
-        expires: Date.now() + 1000*60*60*24*7, // 7 days
-        maxAge: 1000*60*60*24*7
-    } 
-}
+    secret: process.env.SECRET || 'devsecret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+};
+
 app.use(session(sessionConfig));
 app.use(flash());
 

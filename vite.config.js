@@ -1,13 +1,14 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: '.',
-  server: {
-    port: 5173,
-    strictPort: true,
-  },
   build: {
     outDir: 'public/build',
     emptyOutDir: true,
-  },
+    manifest: true,
+    rollupOptions: {
+      input: {
+        clusterMap: 'src/clusterMap.js'
+      }
+    }
+  }
 });

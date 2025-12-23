@@ -1,0 +1,11 @@
+{
+  "src/clusterMap.js": {
+    "file": "assets/clusterMap-BJBM9D9O.js",
+    "name": "clusterMap",
+    "src": "src/clusterMap.js",
+    "isEntry": true,
+    "css": [
+      "assets/clusterMap-fbwtgZsB.css"
+    ]
+  }
+}
