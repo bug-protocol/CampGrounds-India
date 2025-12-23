@@ -21,7 +21,20 @@
               <!-- Left Section (Image & Title) -->
               <div class="w-[250px] flex flex-col items-center">
                 <div class="w-[220px] h-[150px] rounded-lg overflow-hidden shadow-md">
-                  <img src="<%= eachcamp.image[0].url %>" alt="<%= eachcamp.title %>" class="w-full h-full object-cover">
+                  <% if (eachcamp.image && eachcamp.image.length > 0) { %>
+  <img 
+    src="<%= eachcamp.image[0].url %>" 
+    alt="<%= eachcamp.title %>" 
+    class="w-full h-full object-cover"
+  >
+<% } else { %>
+  <img 
+    src="https://picsum.photos/300/200" 
+    alt="No image available" 
+    class="w-full h-full object-cover"
+  >
+<% } %>
+
                 </div>
                 <h2 class="text-lg font-semibold text-gray-800 mt-2"><%= eachcamp.title %></h2>
               </div>
