@@ -7,7 +7,8 @@ export default defineConfig({
     manifest: true,
     rollupOptions: {
       input: {
-        clusterMap: 'src/clusterMap.js'
+        clusterMap: 'src/clusterMap.js',
+        showPageMap: 'src/showPageMap.js'
       }
     }
   }

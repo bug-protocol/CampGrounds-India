@@ -30,7 +30,7 @@ router.get('/new',isloggedIn,campgrounds.new_camp);
 router.get('/:id',isloggedIn, campgrounds.showCamps);
 // Edit Router
 router.get('/:id/edit',isloggedIn,isUserAuthorised,campgrounds.editCampgrounds);
-router.put('/:id',isloggedIn,isUserAuthorised,campgrounds.updateCampgrounds);
+router.put('/:id',isloggedIn,isUserAuthorised,upload.array('image'),campgrounds.updateCampgrounds);
 // Delete Route
 router.delete('/:id',isloggedIn,isUserAuthorised,campgrounds.deleteCampgrounds);
 module.exports = router;

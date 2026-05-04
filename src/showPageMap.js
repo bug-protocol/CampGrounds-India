@@ -3,6 +3,8 @@ import '@maptiler/sdk/dist/maptiler-sdk.css';
 import * as maptilersdk from '@maptiler/sdk';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const maptilerApiKey = window.maptilerApiKey;
+  const campground = window.campground;
 
   function showMapError(msg) {
     console.error(msg);

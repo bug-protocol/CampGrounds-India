@@ -21,22 +21,13 @@ const reviews = require('./routes/reviews.js');
 // Connecting to the database
 const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/campgrounds';
 
-mongoose.connect(dbUrl);
-
-
-// Not inserting few conditions like useNewUrlParser, useUnifiedTopology,
-// useCreateIndex, useFindAndModify
-// This is the default connection
-const db = mongoose.connection;
-// It retrieves the default connection object created by Mongoose.
-// This allows you to listen for database-related events (like connection errors, successful connections, or disconnections).
-
-db.on('error', console.error.bind(console,"Error Connecting to the Database"));
-// This notifies if any error occurs while connecting to the database
-db.once('open',()=>{
-    console.log("Database Connected!!"); // It checks if connection is successful.
-})
 const app = express();
+const port = process.env.PORT || 4000;
+
+const db = mongoose.connection;
+db.on('error', (err) => {
+    console.error("Error Connecting to the Database", err);
+});
 
 //Method Override
 app.use(methodOverride('-method'));
@@ -85,11 +76,6 @@ app.set('view engine','ejs');
 app.set('views', path.join(__dirname,'views'));
 
 
-// Constructing the server port
-app.listen('4000',()=>{
-    console.log("Starting the Server");
-})
-
 // This is the home route
 app.get('/home',(req,res)=>{
     res.render('home.ejs');
@@ -99,3 +85,19 @@ app.get('/home',(req,res)=>{
 app.get ('/',(req,res)=>{
     res.redirect('/home');
 })
+
+async function startServer() {
+    try {
+        await mongoose.connect(dbUrl);
+        console.log("Database Connected!!");
+        app.listen(port,()=>{
+            console.log(`Starting the Server on port ${port}`);
+        });
+    } catch (err) {
+        console.error("Failed to start app because database connection failed.");
+        console.error(err.message);
+        process.exit(1);
+    }
+}
+
+startServer();

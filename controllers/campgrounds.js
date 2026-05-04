@@ -1,5 +1,6 @@
 const Campground = require('../model/campground');
 const maptilerClient = require("@maptiler/client");
+const { getAssetPath } = require('../utils/viteAssets');
 
 function getMapTilerClient() {
   if (!process.env.MAPTILER_API_KEY) {
@@ -9,25 +10,16 @@ function getMapTilerClient() {
   return maptilerClient;
 }
 
-const path = require('path');
-const fs = require('fs');
-
-let mapScript;
-
-if (process.env.NODE_ENV === 'production') {
-  const manifestPath = path.join(__dirname, '../public/build/.vite/manifest.json');
-  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
-  mapScript = `/build/${manifest['src/clusterMap.js'].file}`;
-} else {
-  // dev mode (vite)
-  mapScript = 'http://localhost:5173/src/clusterMap.js';
-}
-
 module.exports.view_page = async (req, res) => {
-  const campgrounds = await Campground.find({});
+  const campgrounds = await Campground.find({
+    geometry: {
+      $exists: true,
+      $ne: null
+    }
+  });
   res.render('campground/camp_index', {
     campgrounds,
-    mapScript
+    mapScript: getAssetPath('src/clusterMap.js', 'src/clusterMap.js')
   });
 };
 
@@ -79,9 +71,16 @@ module.exports.showCamps = async(req,res)=>{
             path : 'user'
         }
     }).populate('user');
+    if(!campground){
+        req.flash('error','No camp exists!!');
+        return res.redirect('/campgrounds');
+    }
     console.log(campground);
     console.log(campground.user.username);
-    res.render('campground/show.ejs',{campground});
+    res.render('campground/show.ejs',{
+        campground,
+        mapScript: getAssetPath('src/showPageMap.js', 'src/showPageMap.js')
+    });
 }
 module.exports.editCampgrounds = async(req,res)=>{
     const {id} = req.params;
@@ -94,9 +93,26 @@ module.exports.editCampgrounds = async(req,res)=>{
 }
 module.exports.updateCampgrounds = async(req,res)=>{
     const {id} = req.params;
-    const camp = await Campground.findByIdAndUpdate(id,{...req.body.campground});
-    const geoData = await maptilerClient.geocoding.forward(req.body.campground.location, { limit: 1 });
+    const camp = await Campground.findById(id);
+    if(!camp){
+        req.flash('error','No camp exists!!');
+        return res.redirect('/campgrounds');
+    }
+
+    camp.set(req.body.campground);
+    const client = getMapTilerClient();
+    const geoData = await client.geocoding.forward(req.body.campground.location, { limit: 1 });
+    if (!geoData.features || geoData.features.length === 0) {
+        req.flash("error", "Invalid location");
+        return res.redirect(`/campgrounds/${id}/edit`);
+    }
     camp.geometry = geoData.features[0].geometry;
+    if (req.files && req.files.length > 0) {
+        const uploadedImages = req.files.map(file => ({ url: file.path, filename: file.filename }));
+        camp.image.push(...uploadedImages);
+    }
+    await camp.save();
+    req.flash('success','Successfully updated campground!');
     res.redirect(`/campgrounds/${camp._id}`);
 }
 module.exports.deleteCampgrounds = async(req,res)=>{

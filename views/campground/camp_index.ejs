@@ -54,11 +54,16 @@
 <!-- </body>
 </html> -->
 <script>
-  const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
-  const campgrounds = { features: <%- JSON.stringify(campgrounds) %> };
+  window.maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
+  window.campgrounds = {
+    type: 'FeatureCollection',
+    features: <%- JSON.stringify(campgrounds) %>
+  };
 </script>
 
-<script type="module" src="<%= mapScript %>"></script>
+<% if (mapScript) { %>
+  <script type="module" src="<%= mapScript %>"></script>
+<% } %>
 
 
 

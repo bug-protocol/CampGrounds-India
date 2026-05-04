@@ -2,14 +2,18 @@ const User = require('../model/user');
 module.exports.registerForm = (req,res)=>{
     res.render('users/register.ejs');
 }
-module.exports.register = async(req,res)=>{
+module.exports.register = async(req,res,next)=>{
     try{
         const{username,email,password} = req.body;
     const user = new User ({email,username});
     const registeredUser = await User.register(user,password);
-    // console.log(registeredUser);
-    req.flash('Welcome to CampGrounds');
-    res.redirect('/campgrounds');
+    req.login(registeredUser, (err) => {
+        if (err) {
+            return next(err);
+        }
+        req.flash('success','Welcome to CampGrounds');
+        res.redirect('/campgrounds');
+    });
     }
     catch(e){
         req.flash('error',e.message);
@@ -26,8 +30,6 @@ module.exports.login = (req,res)=>{
     res.redirect(redirectUrl);
 }
 module.exports.renderLogout = (req,res)=>{
-    req.logout();
-    req.flash('success',"See you later!")
     res.redirect('/campgrounds');
 }
 module.exports.logout = (req, res, next) => {

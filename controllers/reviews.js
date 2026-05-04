@@ -3,6 +3,10 @@ const Review     = require('../model/review');
 
 module.exports.createReview = async(req,res)=>{
     const campground = await Campground.findById(req.params.id);
+    if (!campground) {
+        req.flash('error', 'No camp exists!!');
+        return res.redirect('/campgrounds');
+    }
     const review_drop = new Review(req.body.review);
     review_drop.user = req.user._id;
     campground.review.push(review_drop);
@@ -14,7 +18,7 @@ module.exports.createReview = async(req,res)=>{
 module.exports.deleteReview = async(req,res)=>{
     const{id,reviewId} = req.params;
     await Campground.findByIdAndUpdate(id,{$pull:{review:reviewId}});
-    await Campground.findByIdAndDelete(reviewId);
+    await Review.findByIdAndDelete(reviewId);
     req.flash('success','Successfully deleted review!');
     res.redirect(`/campgrounds/${id}`);
 }
