@@ -23,11 +23,16 @@ const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/campgrounds';
 
 const app = express();
 const port = process.env.PORT || 4000;
+const isProduction = process.env.NODE_ENV === 'production';
 
 const db = mongoose.connection;
 db.on('error', (err) => {
     console.error("Error Connecting to the Database", err);
 });
+
+if (isProduction) {
+    app.set('trust proxy', 1);
+}
 
 //Method Override
 app.use(methodOverride('-method'));
@@ -35,11 +40,13 @@ app.use(methodOverride('-method'));
 const sessionConfig = {
     secret: process.env.SECRET || 'devsecret',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-        maxAge: 1000 * 60 * 60 * 24 * 7
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        sameSite: 'lax',
+        secure: isProduction
     }
 };
 
@@ -85,6 +92,10 @@ app.get('/home',(req,res)=>{
 app.get ('/',(req,res)=>{
     res.redirect('/home');
 })
+
+app.get('/healthz', (req, res) => {
+    res.status(200).json({ ok: true });
+});
 
 async function startServer() {
     try {
